@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Home LAB</title>
+    </h:head>
+    <h:head>
+        <title>Laboratorio #{laboratorioControlador.laboratorio.name}</title>
+    </h:head>
+    <h:body>        
+        <h:form>
+            <p:growl id="messages"/>
+            <p:messages autoUpdate="true" />
+            <p:menubar>
+                <f:facet name="options">
+                    <p:commandButton value="Logout" icon="ui-icon-extlink" action="#{usuarioLoginView.logout()}" style="margin-right:10px"/>
+                </f:facet>
+            </p:menubar>
+
+            <h3>Bem-vindo #{usuarioLoginView.username} ao laboratorio</h3>
+            <p:panel>
+                <h:outputText
+                    value="Antes de fazer mudancas no projeto, por favor veja os colaboradores alocados em cada projeto" /> 
+            </p:panel>
+
+            <p:dataTable var="projeto" value="#{recursosControlador.projetos}">
+                <p:column headerText="Id" style="width: 50px">
+                    <h:outputText value="#{projeto.id}" />
+                </p:column>
+
+                <p:column headerText="Professores">
+                    <h:outputText value="#{projeto.profesores}" />
+                </p:column>
+
+                <p:column headerText="Graduacao">
+                    <h:outputText value="#{projeto.alunos_graduacao}" />
+                </p:column>
+
+                <p:column headerText="Posgraduacao">
+                    <h:outputText value="#{projeto.alunos_graduacao}" />
+                </p:column>
+
+                <p:column headerText="Pesquisadores">
+                    <h:outputText value="#{projeto.pesquisadores}" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <br></br><br></br>
+        <h:form>
+            <p:growl id="msgs" showDetail="true" />
+            <p:fieldset legend="Alocacao de colaboradores" toggleable="true" toggleSpeed="500">
+                <p:ajax event="toggle" listener="#{fieldsetView.handleToggle}" update="msgs" />
+                <h:panelGrid columns="6" cellpadding="5">
+                    <p:outputLabel for="projetos" value="Projetos: "/>
+                    <p:selectOneMenu id="projetos" value="#{recursosControlador.projeto}" style="width: 150px">
+                        <f:selectItem itemLabel="Projetos" itemValue="" noSelectionOption="true"/>
+                        <f:selectItems value="#{recursosControlador.projetos}" var="projetos" itemLabel="#{projetos.id}" itemValue="#{projetos.id}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel for="professores" value="Professores: "/>
+                    <p:selectOneMenu id="professores" value="#{recursosControlador.profesor}" style="width: 150px">
+                        <f:selectItem itemLabel="Professores" itemValue="" noSelectionOption="true"/>
+                        <f:selectItems value="#{recursosControlador.professores}" var="professores" itemLabel="#{professores.nome}" itemValue="#{professores.nome}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel for="graduacao" value="Graduacao: "/>
+                    <p:selectOneMenu id="graduacao" value="#{recursosControlador.aluno_graduacao}" style="width: 150px">
+                        <f:selectItem itemLabel="Graduacao" itemValue="" noSelectionOption="true"/>
+                        <f:selectItems value="#{recursosControlador.alunos_graduacao}" var="graduacao" itemLabel="#{graduacao.nome}" itemValue="#{graduacao.nome}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel for="posgraduacao" value="Posgraduacao: "/>
+                    <p:selectOneMenu id="posgraduacao" value="#{recursosControlador.aluno_posgraduacao}" style="width: 150px">
+                        <f:selectItem itemLabel="Posgraduacao" itemValue="" noSelectionOption="true"/>
+                        <f:selectItems value="#{recursosControlador.alunos_posgraduacao}" var="posgraduacao" itemLabel="#{posgraduacao.nome}" itemValue="#{posgraduacao.nome}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel for="pesquisador" value="Pesquisador: "/>
+                    <p:selectOneMenu id="pesquisador" value="#{recursosControlador.pesquisador}" style="width: 150px">
+                        <f:selectItem itemLabel="Pesquisador" itemValue="" noSelectionOption="true"/>
+                        <f:selectItems value="#{recursosControlador.pesquisadores}" var="pesquisador" itemLabel="#{pesquisador.nome}" itemValue="#{pesquisador.nome}"/>
+                    </p:selectOneMenu>
+
+                    <p:commandButton value="Alocar" update="display" oncomplete="PF('dlg').show()" icon="ui-icon-check" />
+
+                    <p:dialog header="Colaboradores" modal="true" showEffect="bounce" widgetVar="dlg" resizable="false">
+                        <p:panelGrid columns="2" id="display" columnClasses="label,value">
+                            <h:outputText value="Projeto: " />
+                            <h:outputText value="#{recursosControlador.projeto}" />
+
+                            <h:outputText value="Professor: " />
+                            <h:outputText value="#{recursosControlador.profesor}" />
+
+                            <h:outputText value="Graduacao: " />
+                            <h:outputText value="#{recursosControlador.aluno_graduacao}" />
+
+                            <h:outputText value="Posgraduacao: " />
+                            <h:outputText value="#{recursosControlador.aluno_posgraduacao}" />
+
+                            <h:outputText value="Pesquisador: " />
+                            <h:outputText value="#{recursosControlador.pesquisador}" />
+                        </p:panelGrid>
+                    </p:dialog>
+                </h:panelGrid>
+            </p:fieldset>
+        </h:form>
+    </h:body>
+</html>
+

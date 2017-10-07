@@ -28,6 +28,7 @@ public class RecursosControlador implements Serializable{
     private String profesor;
     private ArrayList<Professor> professores = new ArrayList<>();
 
+    private String mensagemAluno = null;
     private String aluno_graduacao;
     private ArrayList<Graduacao> alunos_graduacao = new ArrayList<>();
 
@@ -127,6 +128,14 @@ public class RecursosControlador implements Serializable{
 
     public void setMensagem(String mensagem) {
         this.mensagem = mensagem;
+    }
+
+    public String getMensagemAluno() {
+        return mensagemAluno;
+    }
+
+    public void setMensagemAluno(String mensagemAluno) {
+        this.mensagemAluno = mensagemAluno;
     }
 
     public RecursosControlador(String profesor, String aluno_graduacao, String aluno_posgraduacao, String pesquisador, String projeto) {
@@ -242,6 +251,8 @@ public class RecursosControlador implements Serializable{
 
     }
     
+    //Verifica que o projete esteja em Andamento para poder alocar colaboradores
+    
     public void verificarAlocacao1(){
         boolean flag = false;
         FacesMessage message = null;
@@ -252,10 +263,27 @@ public class RecursosControlador implements Serializable{
             }
         }
         if(flag == false){
-           mensagem = "No se puede";
+           mensagem = "O projeto nao pode ser alocado com colaboradores";
            message = new FacesMessage(FacesMessage.FACES_MESSAGES, "O projeto nao pode alocar parctipantes. Verificar o status"); 
         }
-        else mensagem = "Se puede";
+        else mensagem = "O projeto pode ser alocado com colaboradores";
+    }
+    
+    // Verifica que o um aluno de graduacao somente esteja no maximo dois projetos
+    public void verificarAlocacao2(){
+        int cont = 0;
+        for(int y = 0; y < projetos.size(); y++){
+            for(int z = 0; z < projetos.get(y).getAlunos_graduacao().size(); z++){
+                if(projetos.get(y).getAlunos_graduacao().get(z).getNome().equals(aluno_graduacao)){
+                    cont++;
+                }
+            }
+        }
+        if(cont >= 2) {
+           mensagemAluno = "O aluno de graduacao já faz parte de dois projetos";
+        }
+        else 
+           mensagemAluno = "Se puede alocar o aluno de graduacao";
     }
     
     public void apresentarColaboradores() {

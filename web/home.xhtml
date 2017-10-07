@@ -44,7 +44,7 @@
                 </p:column>
 
                 <p:column headerText="Posgraduacao">
-                    <h:outputText value="#{projeto.alunos_graduacao}" />
+                    <h:outputText value="#{projeto.alunos_pos}" />
                 </p:column>
 
                 <p:column headerText="Pesquisadores">
@@ -88,10 +88,16 @@
                         <f:selectItems value="#{recursosControlador.pesquisadores}" var="pesquisador" itemLabel="#{pesquisador.nome}" itemValue="#{pesquisador.nome}"/>
                     </p:selectOneMenu>
                     
-                    <p:commandButton value="Verificar" update="display1" actionListener="#{recursosControlador.verificarAlocacao1()}" oncomplete="PF('dlg1').show()" icon="ui-icon-check"/>
+                    <p:commandButton value="Verificar status projeto" update="display1" actionListener="#{recursosControlador.verificarAlocacao1()}" oncomplete="PF('dlg1').show()" icon="ui-icon-check"/>
+                    <p:commandButton value="Verificar aluno graduacao" update="display2" actionListener="#{recursosControlador.verificarAlocacao2()}" oncomplete="PF('dlg2').show()" icon="ui-icon-check"/>
                     <p:commandButton value="Alocar" update="display" actionListener="#{recursosControlador.apresentarColaboradores()}" oncomplete="PF('dlg').show()" icon="ui-icon-check" />
                     
-                    <p:dialog header="Verificacao" modal="true" showEffect="bounce" widgetVar="dlg1" resizable="false">   
+                    <p:dialog header="Verificacao aluno graduacao" modal='true' showEffect="bounce" widgetVar="dlg2" resizable="false">
+                        <h:outputText value="Mensagem: "/>
+                        <h:outputText id="display2" value="#{recursosControlador.mensagemAluno}"/>
+                    </p:dialog>
+                    
+                    <p:dialog header="Verificacao status projeto" modal="true" showEffect="bounce" widgetVar="dlg1" resizable="false">   
                         <h:outputText value="Mensagem: " />
                         <h:outputText id="display1" value="#{recursosControlador.mensagem}"/>
                     </p:dialog>

@@ -6,7 +6,6 @@
 package br.puc.rio.inf.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *

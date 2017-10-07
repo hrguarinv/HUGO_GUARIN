@@ -66,39 +66,38 @@
 
                     <p:outputLabel for="professores" value="Professores: "/>
                     <p:selectOneMenu id="professores" value="#{recursosControlador.profesor}" style="width: 150px">
-                        <f:selectItem itemLabel="Professores" itemValue="" noSelectionOption="true"/>
+                        <f:selectItem itemLabel="Professores" itemValue="null" noSelectionOption="true"/>
                         <f:selectItems value="#{recursosControlador.professores}" var="professores" itemLabel="#{professores.nome}" itemValue="#{professores.nome}"/>
                     </p:selectOneMenu>
 
                     <p:outputLabel for="graduacao" value="Graduacao: "/>
                     <p:selectOneMenu id="graduacao" value="#{recursosControlador.aluno_graduacao}" style="width: 150px">
-                        <f:selectItem itemLabel="Graduacao" itemValue="" noSelectionOption="true"/>
+                        <f:selectItem itemLabel="Graduacao" itemValue="null" noSelectionOption="true"/>
                         <f:selectItems value="#{recursosControlador.alunos_graduacao}" var="graduacao" itemLabel="#{graduacao.nome}" itemValue="#{graduacao.nome}"/>
                     </p:selectOneMenu>
 
                     <p:outputLabel for="posgraduacao" value="Posgraduacao: "/>
                     <p:selectOneMenu id="posgraduacao" value="#{recursosControlador.aluno_posgraduacao}" style="width: 150px">
-                        <f:selectItem itemLabel="Posgraduacao" itemValue="" noSelectionOption="true"/>
+                        <f:selectItem itemLabel="Posgraduacao" itemValue="null" noSelectionOption="true"/>
                         <f:selectItems value="#{recursosControlador.alunos_posgraduacao}" var="posgraduacao" itemLabel="#{posgraduacao.nome}" itemValue="#{posgraduacao.nome}"/>
                     </p:selectOneMenu>
 
                     <p:outputLabel for="pesquisador" value="Pesquisador: "/>
                     <p:selectOneMenu id="pesquisador" value="#{recursosControlador.pesquisador}" style="width: 150px">
-                        <f:selectItem itemLabel="Pesquisador" itemValue="" noSelectionOption="true"/>
+                        <f:selectItem itemLabel="Pesquisador" itemValue="null" noSelectionOption="true"/>
                         <f:selectItems value="#{recursosControlador.pesquisadores}" var="pesquisador" itemLabel="#{pesquisador.nome}" itemValue="#{pesquisador.nome}"/>
                     </p:selectOneMenu>
                     
                     <p:commandButton value="Verificar status projeto" update="display1" actionListener="#{recursosControlador.verificarAlocacao1()}" oncomplete="PF('dlg1').show()" icon="ui-icon-check"/>
                     <p:commandButton value="Verificar aluno graduacao" update="display2" actionListener="#{recursosControlador.verificarAlocacao2()}" oncomplete="PF('dlg2').show()" icon="ui-icon-check"/>
-                    <p:commandButton value="Alocar" update="display" actionListener="#{recursosControlador.apresentarColaboradores()}" oncomplete="PF('dlg').show()" icon="ui-icon-check" />
+                    <p:commandButton value="Alocar" update="display1" actionListener="#{recursosControlador.alocarColaboradores()}" oncomplete="PF('dlg1').show()" icon="ui-icon-check" />
                     
                     <p:dialog header="Verificacao aluno graduacao" modal='true' showEffect="bounce" widgetVar="dlg2" resizable="false">
                         <h:outputText value="Mensagem: "/>
                         <h:outputText id="display2" value="#{recursosControlador.mensagemAluno}"/>
                     </p:dialog>
                     
-                    <p:dialog header="Verificacao status projeto" modal="true" showEffect="bounce" widgetVar="dlg1" resizable="false">   
-                        <h:outputText value="Mensagem: " />
+                    <p:dialog header="Colaboradores alocados no projeto" modal="true" showEffect="bounce" widgetVar="dlg1" resizable="false">   
                         <h:outputText id="display1" value="#{recursosControlador.mensagem}"/>
                     </p:dialog>
 
@@ -123,6 +122,7 @@
                 </h:panelGrid>
             </p:fieldset>
         </h:form>
+        <br></br><br></br>
     </h:body>
 </html>
 

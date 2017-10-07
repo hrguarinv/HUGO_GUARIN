@@ -16,30 +16,30 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.event.ActionEvent;
+
 /**
  *
  * @author Toshiba1
  */
 @ManagedBean
 @SessionScoped
-public class RecursosControlador implements Serializable{
+public class RecursosControlador implements Serializable {
 
-    private String profesor;
+    private String profesor = null;
     private ArrayList<Professor> professores = new ArrayList<>();
 
     private String mensagemAluno = null;
-    private String aluno_graduacao;
+    private String aluno_graduacao = null;
     private ArrayList<Graduacao> alunos_graduacao = new ArrayList<>();
 
-    private String aluno_posgraduacao;
+    private String aluno_posgraduacao = null;
     private ArrayList<Posgraduacao> alunos_posgraduacao = new ArrayList<>();
 
-    private String pesquisador;
+    private String pesquisador = null;
     private ArrayList<Pesquisador> pesquisadores = new ArrayList<>();
-    
+
     private String mensagem = null;
-    private String projeto;
+    private String projeto = null;
     private ArrayList<Projeto> projetos = new ArrayList<>();
 
     public String getAluno_graduacao() {
@@ -211,33 +211,27 @@ public class RecursosControlador implements Serializable{
         projeto1.addPosgraduacao(posg2);
         projeto1.addPosgraduacao(posg3);
         projeto1.addPosgraduacao(posg5);
-        
+
         projeto2.addProfesor(prof1);
         projeto2.addGraduacao(grad1);
         projeto2.addGraduacao(grad2);
         projeto2.addPosgraduacao(posg1);
         projeto2.addPosgraduacao(posg3);
         projeto2.addPosgraduacao(posg5);
-        
+
         projeto3.addProfesor(prof2);
         projeto3.addProfesor(prof3);
         projeto3.addPesquisador(pesquisador1);
         projeto3.addPosgraduacao(posg2);
-        
+
         projeto4.addProfesor(prof1);
         projeto4.addGraduacao(grad3);
         projeto4.addPesquisador(pesquisador1);
         projeto4.addPosgraduacao(posg6);
-        
-        
-        
+
         projeto4.addProfesor(prof2);
-        
+
         projeto5.addProfesor(prof3);
-        
-        
-        
-        
 
         projetos.add(projeto1);
         projetos.add(projeto2);
@@ -250,42 +244,198 @@ public class RecursosControlador implements Serializable{
     public RecursosControlador() {
 
     }
-    
+
+    public int procurarProjeto() {
+        int pos = 0;
+        for (int x = 0; x < projetos.size(); x++) {
+            if (projetos.get(x).getId().equals(projeto)) {
+                pos = x;
+                return pos;
+            }
+        }
+        return pos;
+    }
+
+    public int procurarProfessor() {
+        int pos = 0;
+        for (int y = 0; y < professores.size(); y++) {
+            if (professores.get(y).getNome().equals(profesor)) {
+                pos = y;
+                return pos;
+            }
+        }
+        return pos;
+    }
+
+    public int procurarGraduacao() {
+        int pos = 0;
+        for (int z = 0; z < alunos_graduacao.size(); z++) {
+            if (alunos_graduacao.get(z).getNome().equals(aluno_graduacao)) {
+                pos = z;
+                return pos;
+            }
+        }
+        return pos;
+    }
+
+    public int procurarPosgraduacao() {
+        int pos = 0;
+        for (int z = 0; z < alunos_posgraduacao.size(); z++) {
+            if (alunos_posgraduacao.get(z).getNome().equals(aluno_posgraduacao)) {
+                pos = z;
+                return pos;
+            }
+        }
+        return pos;
+    }
+
+    public int procurarPesquisador() {
+        int pos = 0;
+        for (int z = 0; z < pesquisadores.size(); z++) {
+            if (pesquisadores.get(z).getNome().equals(pesquisador)) {
+                pos = z;
+                return pos;
+            }
+        }
+        return pos;
+    }
+
+    public boolean professorRepetido(int posProj) {
+        for (int x = 0; x < projetos.get(posProj).getProfesores().size(); x++) {
+            if (projetos.get(posProj).getProfesores().get(x).getNome().equals(profesor)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean graduacaoRepetido(int posProj) {
+        for (int x = 0; x < projetos.get(posProj).getAlunos_graduacao().size(); x++) {
+            if (projetos.get(posProj).getAlunos_graduacao().get(x).getNome().equals(aluno_graduacao)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean posgraduacaoRepetido(int posProj) {
+        for (int x = 0; x < projetos.get(posProj).getAlunos_pos().size(); x++) {
+            if (projetos.get(posProj).getAlunos_pos().get(x).getNome().equals(aluno_posgraduacao)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean pesquisadorRepetido(int posProj) {
+        for (int x = 0; x < projetos.get(posProj).getPesquisadores().size(); x++) {
+            if (projetos.get(posProj).getPesquisadores().get(x).getNome().equals(pesquisador)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     //Verifica que o projete esteja em Andamento para poder alocar colaboradores
-    
-    public void verificarAlocacao1(){
+    public boolean verificarAlocacao1() {
         boolean flag = false;
         FacesMessage message = null;
-        for(int x=0; x < projetos.size(); x++){
-            if((projetos.get(x).getId().equals(projeto)) && (projetos.get(x).getStatus().equals("Em Andamento"))){
+        for (int x = 0; x < projetos.size(); x++) {
+            if ((projetos.get(x).getId().equals(projeto)) && (projetos.get(x).getStatus().equals("Em Andamento"))) {
                 message = new FacesMessage(FacesMessage.FACES_MESSAGES, "O projeto pode alocar participantes");
                 flag = true;
             }
         }
-        if(flag == false){
-           mensagem = "O projeto nao pode ser alocado com colaboradores";
-           message = new FacesMessage(FacesMessage.FACES_MESSAGES, "O projeto nao pode alocar parctipantes. Verificar o status"); 
+        if (flag == false) {
+            message = new FacesMessage(FacesMessage.FACES_MESSAGES, "O projeto nao pode alocar parctipantes. Verificar o status");
+            return false;
+        } else {
+            return true;
         }
-        else mensagem = "O projeto pode ser alocado com colaboradores";
     }
-    
+
     // Verifica que o um aluno de graduacao somente esteja no maximo dois projetos
-    public void verificarAlocacao2(){
+    public boolean verificarAlocacao2() {
         int cont = 0;
-        for(int y = 0; y < projetos.size(); y++){
-            for(int z = 0; z < projetos.get(y).getAlunos_graduacao().size(); z++){
-                if(projetos.get(y).getAlunos_graduacao().get(z).getNome().equals(aluno_graduacao)){
+        for (int y = 0; y < projetos.size(); y++) {
+            for (int z = 0; z < projetos.get(y).getAlunos_graduacao().size(); z++) {
+                if (projetos.get(y).getAlunos_graduacao().get(z).getNome().equals(aluno_graduacao)) {
                     cont++;
                 }
             }
         }
-        if(cont >= 2) {
-           mensagemAluno = "O aluno de graduacao já faz parte de dois projetos";
+        if (cont >= 2) {
+            mensagemAluno = "O aluno de graduacao já faz parte de dois projetos\n";
+            return false;
+        } else {
+            mensagemAluno = "Se puede alocar o aluno de graduacao";
+            return true;
         }
-        else 
-           mensagemAluno = "Se puede alocar o aluno de graduacao";
     }
-    
+
+    public void alocarColaboradores() {
+        mensagem = "";
+        int posProj = procurarProjeto();
+        int posProf = procurarProfessor();
+        int posPos = procurarPosgraduacao();
+        int posgrad = procurarGraduacao();
+        int posPes = procurarPesquisador();
+
+        if (verificarAlocacao1() == false) {
+            if (projeto.equals("")) {
+                mensagem = "Selecione um projeto\n";
+            } else {
+                mensagem = " [O projeto nao tem o status certo para alocar colaboradores] ";
+            }
+        } else {
+            mensagem = "";
+            if (profesor.equals("null")) {
+
+            } else {
+                if (professorRepetido(posProj) == false) {
+                    projetos.get(posProj).addProfesor(professores.get(posProf));
+                    mensagem += "Professor: " + profesor + " - ";
+                } else {
+                    mensagem = " [O professor já faz parte do projeto] ";
+                }
+            }
+            if (aluno_posgraduacao.equals("null")) {
+
+            } else {
+                if (posgraduacaoRepetido(posProj) == false) {
+                    projetos.get(posProj).addPosgraduacao(alunos_posgraduacao.get(posPos));
+                    mensagem += " Posgraduacao: " + aluno_posgraduacao + " - ";
+                } else {
+                    mensagem = " [O aluno da posgraduacao já faz parte do projeto] ";
+                }
+            }
+            if (pesquisador.equals("null")) {
+
+            } else {
+                if (pesquisadorRepetido(posProj) == false) {
+                    projetos.get(posProj).addPesquisador(pesquisadores.get(posPes));
+                    mensagem += " Pesquisador: " + pesquisador + " - ";
+                } else {
+                    mensagem = " [O pesquisador já faz parte do projeto] ";
+                }
+            }
+            if (verificarAlocacao2() == true) {
+                if (aluno_graduacao.equals("null")) {
+
+                } else {
+                    if (graduacaoRepetido(posProj) == false) {
+                        projetos.get(posProj).addGraduacao(alunos_graduacao.get(posgrad));
+                        mensagem += " Graduacao: " + aluno_graduacao;
+                    } else {
+                        mensagem = " [O aluno da graduacao já faz parte do projeto] ";
+                    }
+                }
+            } else {
+                mensagem += " [O aluno da graduacao faz parte de dois projetos] ";
+            }
+        }
+    }
+
     public void apresentarColaboradores() {
         for (int i = 0; i < professores.size(); i++) {
             System.out.println("Nome: " + professores.get(i).getNome() + " Afiliacao: " + professores.get(i).getAfiliacao());
@@ -302,17 +452,19 @@ public class RecursosControlador implements Serializable{
         for (int z = 0; z < projetos.size(); z++) {
             System.out.println("Id: " + projetos.get(z).getId());
         }
-        
-        for(int f = 0; f < projetos.size(); f++){
+
+        for (int f = 0; f < projetos.size(); f++) {
             System.out.println("Projeto: " + projetos.get(f).getId() + "  Prof: " + projetos.get(f).getProfesores().get(0).getNome());
         }
-        
-         for(int x=0; x < projetos.size(); x++){
-            if((projetos.get(x).getId().equals(projeto)) && (projetos.get(x).getStatus().equals("Em Andamento"))){
+
+        for (int x = 0; x < projetos.size(); x++) {
+            if ((projetos.get(x).getId().equals(projeto)) && (projetos.get(x).getStatus().equals("Em Andamento"))) {
                 System.out.println("Proyecto seleccionado con Id: " + projetos.get(x).getId() + " y status: " + projetos.get(x).getStatus());
             }
         }
-         
+
         System.out.println("Mensaje: " + mensagem);
+        System.out.println("Dados capturados: " + projeto + " - " + profesor + " - " + aluno_graduacao + " - " + aluno_posgraduacao + " - " + pesquisador);
+
     }
 }

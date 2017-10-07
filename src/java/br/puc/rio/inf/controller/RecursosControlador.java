@@ -13,8 +13,10 @@ import br.puc.rio.inf.model.Projeto;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.ActionEvent;
 /**
  *
  * @author Toshiba1
@@ -34,7 +36,8 @@ public class RecursosControlador implements Serializable{
 
     private String pesquisador;
     private ArrayList<Pesquisador> pesquisadores = new ArrayList<>();
-
+    
+    private String mensagem = null;
     private String projeto;
     private ArrayList<Projeto> projetos = new ArrayList<>();
 
@@ -118,6 +121,14 @@ public class RecursosControlador implements Serializable{
         this.pesquisadores = pesquisadores;
     }
 
+    public String getMensagem() {
+        return mensagem;
+    }
+
+    public void setMensagem(String mensagem) {
+        this.mensagem = mensagem;
+    }
+
     public RecursosControlador(String profesor, String aluno_graduacao, String aluno_posgraduacao, String pesquisador, String projeto) {
         this.profesor = profesor;
         this.aluno_graduacao = aluno_graduacao;
@@ -158,7 +169,7 @@ public class RecursosControlador implements Serializable{
 
         Projeto projeto3 = new Projeto("40", "Qualidade d e Software", "02/05/2006", "02/10/2009", "FPCL", "R$ 100.000",
                 "O objetivo geral deste projeto é desenvolver os fundamentos e as tecnologias para desenvolvimento de software com qualidade",
-                "Pesquisar, aplicar e avaliar técnicas para qualidade em desenvolvimento de software", "Em Andamento");
+                "Pesquisar, aplicar e avaliar técnicas para qualidade em desenvolvimento de software", "Concluido");
 
         Projeto projeto4 = new Projeto("50", "Model-driven Software Product Lines Development", " ", " ", "FPCL", "R$ 500.000",
                 "O objetivo geral deste projeto é desenvolver técnicas de engenharia de software dirigadas a modelos para o desenvolvimento de linhas de produtos de software",
@@ -231,7 +242,22 @@ public class RecursosControlador implements Serializable{
 
     }
     
-
+    public void verificarAlocacao1(){
+        boolean flag = false;
+        FacesMessage message = null;
+        for(int x=0; x < projetos.size(); x++){
+            if((projetos.get(x).getId().equals(projeto)) && (projetos.get(x).getStatus().equals("Em Andamento"))){
+                message = new FacesMessage(FacesMessage.FACES_MESSAGES, "O projeto pode alocar participantes");
+                flag = true;
+            }
+        }
+        if(flag == false){
+           mensagem = "No se puede";
+           message = new FacesMessage(FacesMessage.FACES_MESSAGES, "O projeto nao pode alocar parctipantes. Verificar o status"); 
+        }
+        else mensagem = "Se puede";
+    }
+    
     public void apresentarColaboradores() {
         for (int i = 0; i < professores.size(); i++) {
             System.out.println("Nome: " + professores.get(i).getNome() + " Afiliacao: " + professores.get(i).getAfiliacao());
@@ -253,6 +279,12 @@ public class RecursosControlador implements Serializable{
             System.out.println("Projeto: " + projetos.get(f).getId() + "  Prof: " + projetos.get(f).getProfesores().get(0).getNome());
         }
         
-
+         for(int x=0; x < projetos.size(); x++){
+            if((projetos.get(x).getId().equals(projeto)) && (projetos.get(x).getStatus().equals("Em Andamento"))){
+                System.out.println("Proyecto seleccionado con Id: " + projetos.get(x).getId() + " y status: " + projetos.get(x).getStatus());
+            }
+        }
+         
+        System.out.println("Mensaje: " + mensagem);
     }
 }

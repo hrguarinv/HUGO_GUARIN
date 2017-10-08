@@ -28,7 +28,7 @@ public class RecursosControlador implements Serializable {
     private String profesor = null;
     private ArrayList<Professor> professores = new ArrayList<>();
 
-    private String mensagemAluno = null;
+    
     private String aluno_graduacao = null;
     private ArrayList<Graduacao> alunos_graduacao = new ArrayList<>();
 
@@ -39,6 +39,8 @@ public class RecursosControlador implements Serializable {
     private ArrayList<Pesquisador> pesquisadores = new ArrayList<>();
 
     private String mensagem = null;
+    private String mensagemStatus = null;
+    private String opcaoStatus = null;
     private String projeto = null;
     private ArrayList<Projeto> projetos = new ArrayList<>();
 
@@ -130,12 +132,22 @@ public class RecursosControlador implements Serializable {
         this.mensagem = mensagem;
     }
 
-    public String getMensagemAluno() {
-        return mensagemAluno;
+
+
+    public String getOpcaoStatus() {
+        return opcaoStatus;
     }
 
-    public void setMensagemAluno(String mensagemAluno) {
-        this.mensagemAluno = mensagemAluno;
+    public void setOpcaoStatus(String opcaoStatus) {
+        this.opcaoStatus = opcaoStatus;
+    }
+
+    public String getMensagemStatus() {
+        return mensagemStatus;
+    }
+
+    public void setMensagemStatus(String mensagemStatus) {
+        this.mensagemStatus = mensagemStatus;
     }
 
     public RecursosControlador(String profesor, String aluno_graduacao, String aluno_posgraduacao, String pesquisador, String projeto) {
@@ -169,24 +181,24 @@ public class RecursosControlador implements Serializable {
         Projeto projeto1 = new Projeto("20", "Engenharia de Software para Sistemas Multi-Agentes (ESMA)",
                 "02/02/2003", "02/02/2010", "FPCL", "R$ 300.000",
                 "O objetivo geral deste projeto é desenvolver os fundamentos e as tecnologias da ESSMA",
-                "Pesquisar, aplicar e avaliar técnicas de desenvolvimiento de software para sistmas multi-agentes", "Em Andamento");
+                "Pesquisar, aplicar e avaliar técnicas de desenvolvimiento de software para sistmas multi-agentes", "Em Elaboracao");
 
         Projeto projeto2 = new Projeto("30", "Engenharia de Software Orientada a Aspectos (ESOA)",
                 "02/02/2005", "02/12/2011", "FPCL", "R$ 190.000",
                 "O objetivo geral deste projeto é desenvolver os fundamentos e as tecnologias da ESOA",
-                "Pesquisar, aplicar e avaliar técnicas de desenvolvimiento de software orientado à aspectos", "Em Andamento");
+                "Pesquisar, aplicar e avaliar técnicas de desenvolvimiento de software orientado à aspectos", "Em Elaboracao");
 
-        Projeto projeto3 = new Projeto("40", "Qualidade d e Software", "02/05/2006", "02/10/2009", "FPCL", "R$ 100.000",
+        Projeto projeto3 = new Projeto("40", "Qualidade de Software", "02/05/2006", "02/10/2009", "FPCL", "R$ 100.000",
                 "O objetivo geral deste projeto é desenvolver os fundamentos e as tecnologias para desenvolvimento de software com qualidade",
                 "Pesquisar, aplicar e avaliar técnicas para qualidade em desenvolvimento de software", "Concluido");
 
-        Projeto projeto4 = new Projeto("50", "Model-driven Software Product Lines Development", " ", " ", "FPCL", "R$ 500.000",
+        Projeto projeto4 = new Projeto("50", "Model-driven Software Product Lines Development", null, null, "FPCL", "R$ 500.000",
                 "O objetivo geral deste projeto é desenvolver técnicas de engenharia de software dirigadas a modelos para o desenvolvimento de linhas de produtos de software",
                 "Pesquisar, aplicar e avaliar técnicas para o desenvolvimento de linhas de produtos de software", "Em Andamento");
 
         Projeto projeto5 = new Projeto("60", "Self-organizing Multi-agent Systems", "15/07/2008", "02/10/2010", "FPCL", "R$ 150.000",
                 "O objetivo geral deste projeto é desenvolver sistemas multi-agentes auto-organizaveis",
-                "Pesquisar, aplicar e avaliar técnicas para o desenvolvimento de sistemas multi-agentes auto-organizáveis", "Em Andamento");
+                "Pesquisar, aplicar e avaliar técnicas para o desenvolvimento de sistemas multi-agentes auto-organizáveis", null);
 
         professores.add(prof1);
         professores.add(prof2);
@@ -341,7 +353,7 @@ public class RecursosControlador implements Serializable {
         boolean flag = false;
         FacesMessage message = null;
         for (int x = 0; x < projetos.size(); x++) {
-            if ((projetos.get(x).getId().equals(projeto)) && (projetos.get(x).getStatus().equals("Em Andamento"))) {
+            if ((projetos.get(x).getId().equals(projeto)) && (projetos.get(x).getStatus().equals("Em Elaboracao"))) {
                 message = new FacesMessage(FacesMessage.FACES_MESSAGES, "O projeto pode alocar participantes");
                 flag = true;
             }
@@ -365,10 +377,8 @@ public class RecursosControlador implements Serializable {
             }
         }
         if (cont >= 2) {
-            mensagemAluno = "O aluno de graduacao já faz parte de dois projetos\n";
             return false;
         } else {
-            mensagemAluno = "Se puede alocar o aluno de graduacao";
             return true;
         }
     }
@@ -436,6 +446,39 @@ public class RecursosControlador implements Serializable {
         }
     }
 
+    public boolean verificarInformacoes() {
+        int posProj = procurarProjeto();
+        if (projetos.get(posProj).getAgenciaFinanciadora() != null && projetos.get(posProj).getDataInicio() != null && projetos.get(posProj).getDataTermino() != null
+                && projetos.get(posProj).getDescricao() != null && projetos.get(posProj).getObjetivo() != null
+                && projetos.get(posProj).getTitulo() != null && projetos.get(posProj).getValor() != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void alterarStatus() {
+        mensagemStatus = "";
+        int posProj = procurarProjeto();
+        if (opcaoStatus.equals("null")) {
+            mensagemStatus = "Selecione uma opcao para alterar o status do projeto";
+        } else {
+            if (opcaoStatus.equals("Em Andamento")) {
+                if (verificarInformacoes() == true && projetos.get(posProj).getStatus().equals("Em Elaboracao")) {
+                    projetos.get(posProj).setStatus("Em Andamento");
+                    mensagemStatus = "O status do projeto foi alterado para Em Andamento";
+                } else {
+                    if (projetos.get(posProj).getStatus() != null) {
+                        mensagemStatus = "Nao é possivel alterar o status do projeto porque ele já está Em Andamento";
+                    } else {
+                        mensagemStatus = "Nao é possivel alterar o status por falta das informacaoes do projeto";
+                    }
+                }
+            }
+            // Fazer a parte de Em Andamento para Concluido
+        }
+    }
+    
     public void apresentarColaboradores() {
         for (int i = 0; i < professores.size(); i++) {
             System.out.println("Nome: " + professores.get(i).getNome() + " Afiliacao: " + professores.get(i).getAfiliacao());

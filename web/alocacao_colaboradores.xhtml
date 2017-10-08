@@ -88,36 +88,11 @@
                         <f:selectItems value="#{recursosControlador.pesquisadores}" var="pesquisador" itemLabel="#{pesquisador.nome}" itemValue="#{pesquisador.nome}"/>
                     </p:selectOneMenu>
                     
-                    <p:commandButton value="Verificar status projeto" update="display1" actionListener="#{recursosControlador.verificarAlocacao1()}" oncomplete="PF('dlg1').show()" icon="ui-icon-check"/>
-                    <p:commandButton value="Verificar aluno graduacao" update="display2" actionListener="#{recursosControlador.verificarAlocacao2()}" oncomplete="PF('dlg2').show()" icon="ui-icon-check"/>
                     <p:commandButton value="Alocar" update="display1" actionListener="#{recursosControlador.alocarColaboradores()}" oncomplete="PF('dlg1').show()" icon="ui-icon-check" />
                     
-                    <p:dialog header="Verificacao aluno graduacao" modal='true' showEffect="bounce" widgetVar="dlg2" resizable="false">
-                        <h:outputText value="Mensagem: "/>
-                        <h:outputText id="display2" value="#{recursosControlador.mensagemAluno}"/>
-                    </p:dialog>
                     
                     <p:dialog header="Colaboradores alocados no projeto" modal="true" showEffect="bounce" widgetVar="dlg1" resizable="false">   
                         <h:outputText id="display1" value="#{recursosControlador.mensagem}"/>
-                    </p:dialog>
-
-                    <p:dialog header="Colaboradores" modal="true" showEffect="bounce" widgetVar="dlg" resizable="false">
-                        <p:panelGrid columns="2" id="display" columnClasses="label,value">
-                            <h:outputText value="Projeto: " />
-                            <h:outputText value="#{recursosControlador.projeto}" />
-
-                            <h:outputText value="Professor: " />
-                            <h:outputText value="#{recursosControlador.profesor}" />
-
-                            <h:outputText value="Graduacao: " />
-                            <h:outputText value="#{recursosControlador.aluno_graduacao}" />
-
-                            <h:outputText value="Posgraduacao: " />
-                            <h:outputText value="#{recursosControlador.aluno_posgraduacao}" />
-
-                            <h:outputText value="Pesquisador: " />
-                            <h:outputText value="#{recursosControlador.pesquisador}" />
-                        </p:panelGrid>
                     </p:dialog>
                 </h:panelGrid>
             </p:fieldset>

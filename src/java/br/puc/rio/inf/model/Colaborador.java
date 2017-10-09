@@ -5,6 +5,8 @@
  */
 package br.puc.rio.inf.model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Toshiba1
@@ -14,6 +16,8 @@ public class Colaborador {
     private String Id;
     private String nome;
     private String email;
+    private ArrayList<Projeto> projetos = new ArrayList<>();
+    private ArrayList<Publicacao> publicacoes = new ArrayList<>();
 
     public Colaborador(String Id, String nome, String email) {
         this.Id = Id;
@@ -22,9 +26,9 @@ public class Colaborador {
     }
     
     public Colaborador(){
-       
+        
     }
-
+    
     public String getId() {
         return Id;
     }
@@ -49,11 +53,34 @@ public class Colaborador {
         this.email = email;
     }
 
+    public ArrayList<Projeto> getProjetos() {
+        return projetos;
+    }
+
+    public void setProjetos(ArrayList<Projeto> projetos) {
+        this.projetos = projetos;
+    }
+
+    public ArrayList<Publicacao> getPublicacoes() {
+        return publicacoes;
+    }
+
+    public void setPublicacoes(ArrayList<Publicacao> publicacoes) {
+        this.publicacoes = publicacoes;
+    }
+
+    
+    
+    public void addProjeto(Projeto projeto){
+        this.projetos.add(projeto);
+    }
+    
+    public void addPublicacao(Publicacao publicacao){
+        this.publicacoes.add(publicacao);
+    }
+
     @Override
     public String toString() {
         return nome;
     }
-    
-    
-    
 }

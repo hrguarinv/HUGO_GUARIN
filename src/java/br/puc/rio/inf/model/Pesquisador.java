@@ -5,29 +5,33 @@
  */
 package br.puc.rio.inf.model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Toshiba1
  */
 public class Pesquisador extends Colaborador {
-    
-     private String origem;
 
-        public Pesquisador(String origem, String Id, String nome, String email) {
-            super(Id, nome, email);
-            this.origem = origem;
-        }
-        
-        public Pesquisador(){
-            
-        }
+    private String origem;
 
-        public String getOrigem() {
-            return origem;
-        }
+    public Pesquisador(String origem, String Id, String nome, String email) {
+        super(Id, nome, email);
+        this.origem = origem;
+    }
 
-        public void setOrigem(String origem) {
-            this.origem = origem;
-        }
-    
+      
+
+    public Pesquisador() {
+
+    }
+
+    public String getOrigem() {
+        return origem;
+    }
+
+    public void setOrigem(String origem) {
+        this.origem = origem;
+    }
+
 }

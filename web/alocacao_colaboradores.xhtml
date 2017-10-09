@@ -16,6 +16,7 @@
             <p:messages autoUpdate="true" />
             <p:menubar>
                 <f:facet name="options">
+                    <p:commandButton value="Home" icon="ui-icon-extlink" action="home" style="margin-right:20px"/>
                     <p:commandButton value="Logout" icon="ui-icon-extlink" action="#{usuarioLoginView.logout()}" style="margin-right:10px"/>
                 </f:facet>
             </p:menubar>
@@ -50,6 +51,7 @@
                 <p:column headerText="Pesquisadores">
                     <h:outputText value="#{projeto.pesquisadores}" />
                 </p:column>
+
             </p:dataTable>
         </h:form>
         <br></br><br></br>
@@ -87,10 +89,10 @@
                         <f:selectItem itemLabel="Pesquisador" itemValue="null" noSelectionOption="true"/>
                         <f:selectItems value="#{recursosControlador.pesquisadores}" var="pesquisador" itemLabel="#{pesquisador.nome}" itemValue="#{pesquisador.nome}"/>
                     </p:selectOneMenu>
-                    
+
                     <p:commandButton value="Alocar" update="display1" actionListener="#{recursosControlador.alocarColaboradores()}" oncomplete="PF('dlg1').show()" icon="ui-icon-check" />
-                    
-                    
+
+
                     <p:dialog header="Colaboradores alocados no projeto" modal="true" showEffect="bounce" widgetVar="dlg1" resizable="false">   
                         <h:outputText id="display1" value="#{recursosControlador.mensagem}"/>
                     </p:dialog>

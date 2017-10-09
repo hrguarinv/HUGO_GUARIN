@@ -5,55 +5,61 @@
  */
 package br.puc.rio.inf.model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Toshiba1
  */
 public class Posgraduacao extends Colaborador {
-    
-     private String Regcurso;
-        private Professor orientador;
-        private String data;
-        private boolean tipo;
 
-        public Posgraduacao(String Regcurso, Professor orientador, String data, boolean tipo, String Id, String nome, String email) {
-            super(Id, nome, email);
-            this.Regcurso = Regcurso;
-            this.orientador = orientador;
-            this.data = data;
-            this.tipo = tipo;
-        }
-        // metodos da clase Posgraduacao
+    private String Regcurso;
+    private Professor orientador;
+    private String data;
+    private boolean tipo;
 
-        public String getRegcurso() {
-            return Regcurso;
-        }
+    public Posgraduacao(String Regcurso, Professor orientador, String data, boolean tipo, String Id, String nome, String email) {
+        super(Id, nome, email);
+        this.Regcurso = Regcurso;
+        this.orientador = orientador;
+        this.data = data;
+        this.tipo = tipo;
+    }
 
-        public void setRegcurso(String Regcurso) {
-            this.Regcurso = Regcurso;
-        }
+    public Posgraduacao() {
 
-        public Professor getOrientador() {
-            return orientador;
-        }
+    }
+    // metodos da clase Posgraduacao
 
-        public void setOrientador(Professor orientador) {
-            this.orientador = orientador;
-        }
+    public String getRegcurso() {
+        return Regcurso;
+    }
 
-        public String getData() {
-            return data;
-        }
+    public void setRegcurso(String Regcurso) {
+        this.Regcurso = Regcurso;
+    }
 
-        public void setData(String data) {
-            this.data = data;
-        }
+    public Professor getOrientador() {
+        return orientador;
+    }
 
-        public boolean isTipo() {
-            return tipo;
-        }
+    public void setOrientador(Professor orientador) {
+        this.orientador = orientador;
+    }
 
-        public void setTipo(boolean tipo) {
-            this.tipo = tipo;
-        }
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public boolean isTipo() {
+        return tipo;
+    }
+
+    public void setTipo(boolean tipo) {
+        this.tipo = tipo;
+    }
 }

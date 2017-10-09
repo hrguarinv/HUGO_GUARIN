@@ -61,7 +61,7 @@ public class UsuarioLoginView implements Serializable {
         if ((username != null && username.equals("Administrador") && password != null && password.equals("admin123")) || (username != null && username.equals("Gerente") && password != null && password.equals("gerente123"))) {
             logeado = true;
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bem-vindo", username);
-            return "alocacao_colaboradores";
+            return "home";
 
         } else {
             logeado = false;

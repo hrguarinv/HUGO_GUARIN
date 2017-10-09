@@ -13,6 +13,7 @@
             <p:messages autoUpdate="true" />
             <p:menubar>
                 <f:facet name="options">
+                    <p:commandButton value="Home" icon="ui-icon-extlink" action="home" style="margin-right:20px"/>
                     <p:commandButton value="Logout" icon="ui-icon-extlink" action="#{usuarioLoginView.logout()}" style="margin-right:10px"/>
                 </f:facet>
             </p:menubar>
@@ -22,35 +23,33 @@
             </p:panel>
 
             <p:dataTable var="projeto" value="#{recursosControlador.projetos}">
-                <p:column headerText="Id" style="width: 10px">
+                <p:column headerText="Id" style="width: 20px">
                     <h:outputText value="#{projeto.id}" />
                 </p:column>
 
-                <p:column headerText="Titulo" style="width: 140px">
+                <p:column headerText="Titulo" style="width: 80px">
                     <h:outputText value="#{projeto.titulo}" />
                 </p:column>
 
                 <p:column headerText="Status" style="width: 40px">
                     <h:outputText value="#{projeto.status}" />
                 </p:column>
-                
-                 <p:column headerText="Valor" style="width: 40px">
-                     <h:outputText value="#{projeto.valor}" />
+
+                <p:column headerText="Valor" style="width: 40px">
+                    <h:outputText value="#{projeto.valor}" />
                 </p:column>
-                
-                 <p:column headerText="Data de inicio" style="width: 40px">
-                     <h:outputText value="#{projeto.dataInicio}" />
+
+                <p:column headerText="Data de inicio" style="width: 40px">
+                    <h:outputText value="#{projeto.dataInicio}" />
                 </p:column>
-                
-                 <p:column headerText="Data de termino" style="width: 40px">
-                     <h:outputText value="#{projeto.dataTermino}" />
+
+                <p:column headerText="Data de termino" style="width: 40px">
+                    <h:outputText value="#{projeto.dataTermino}" />
                 </p:column>
-                
-                
+
                 <p:column headerText="Publicacoes" style="width: 100px">
-                    <h:outputText value="Publicacoes" />
+                    <h:outputText value="#{projeto.publicacoes}" />
                 </p:column>
-                
 
             </p:dataTable>
         </h:form>

@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Inclusao informacao academica</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:growl id="messages"/>
+            <p:messages autoUpdate="true" />
+            <p:menubar>
+                <f:facet name="options">
+                    <p:commandButton value="Home" icon="ui-icon-extlink" action="home" style="margin-right:20px"/>
+                    <p:commandButton value="Logout" icon="ui-icon-extlink" action="#{usuarioLoginView.logout()}" style="margin-right:10px"/>
+                </f:facet>
+            </p:menubar>
+
+            <p:panel>
+                <h:outputText
+                    value="Publicacoes do sistema do Laboratorio" /> 
+            </p:panel>
+            <br></br><br></br> 
+            <p:dataTable var="publicacao" value="#{recursosControlador.publicacoes}">
+                <p:column headerText="Id" style="width: 15px">
+                    <h:outputText value="#{publicacao.id}" />
+                </p:column>
+
+                <p:column headerText="Titulo" style="width: 100px">
+                    <h:outputText value="#{publicacao.titulo}" />
+                </p:column>
+
+                <p:column headerText="Ano" style="width: 15px">
+                    <h:outputText value="#{publicacao.ano}" />
+                </p:column>
+
+                <p:column headerText="Projeto" style="width: 15px">
+                    <h:outputText value="#{publicacao.projeto.id}" />
+                </p:column>
+                
+                <p:column headerText="Professores" style="width: 70px">
+                    <h:outputText value="#{publicacao.projeto.profesores}" />
+                </p:column>
+                
+                <p:column headerText="Graduacao" style="width: 70px">
+                    <h:outputText value="#{publicacao.projeto.alunos_graduacao}" />
+                </p:column>
+                
+                <p:column headerText="Posgraduacao" style="width: 70px">
+                    <h:outputText value="#{publicacao.projeto.alunos_pos}" />
+                </p:column>
+                
+                <p:column headerText="Pesquisadores" style="width: 50px">
+                    <h:outputText value="#{publicacao.projeto.pesquisadores}" />
+                </p:column>
+                
+            </p:dataTable>
+        </h:form>
+        <br></br><br></br> 
+        <h:form>
+            <p:growl id="msgs" showDetail="true" />
+            <p:fieldset legend="Criar publicacao" toggleable="true" toggleSpeed="500">
+                <p:ajax event="toggle" listener="#{fieldsetView.handleToggle}" update="msgs" />
+                <h:panelGrid columns="6" cellpadding="5">
+
+                    <p:outputLabel for="titulo" value="Titulo: " />
+                    <p:inputText id="titulo"  required="true" value="#{recursosControlador.tituloPub}"/>
+                    <p:message for="titulo"/>
+
+                    <p:outputLabel for="conferencia" value="Conferencia: " />
+                    <p:inputText id="conferencia" required="true" value="#{recursosControlador.conferenciaPub}"/>
+                    <p:message for="conferencia"/>
+
+                    <p:outputLabel for="ano" value="Ano: " />
+                    <p:inputText id="ano" required="true" value="#{recursosControlador.anoPub}"/>
+                    <p:message for="ano"/>
+
+                    <p:outputLabel for="projetos" value="Projetos: "/>
+                    <p:selectOneMenu id="projetos" value="#{recursosControlador.projetoPub}" style="width: 150px">
+                        <f:selectItem itemLabel="Projetos" itemValue="null" noSelectionOption="true"/>
+                        <f:selectItems value="#{recursosControlador.projetos}" var="projetos" itemLabel="#{projetos.id}" itemValue="#{projetos.id}"/>
+                    </p:selectOneMenu>
+
+                    <p:commandButton value="Alocar" update="display1" actionListener="#{recursosControlador.criarPublicacao()}" oncomplete="PF('dlg1').show()" icon="ui-icon-check" />
+                    <p:dialog header="Colaboradores alocados no projeto" modal="true" showEffect="bounce" widgetVar="dlg1" resizable="false">   
+                        <h:outputText id="display1" value="#{recursosControlador.mensagem_pub}"/>
+                    </p:dialog>
+                </h:panelGrid>
+            </p:fieldset>
+            <br></br> 
+            <p:fieldset legend="Autores" toggleable="true" toggleSpeed="500">
+                <p:ajax event="toggle" listener="#{fieldsetView.handleToggle}" update="msgs" />
+                <h:panelGrid columns="6" cellpadding="5">
+                    <p:outputLabel for="professores" value="Professores: "/>
+                    <p:selectOneMenu id="professores" value="#{recursosControlador.professorPub}" style="width: 150px">
+                        <f:selectItem itemLabel="Professores" itemValue="null" noSelectionOption="true"/>
+                        <f:selectItems value="#{recursosControlador.professores}" var="professores" itemLabel="#{professores.nome}" itemValue="#{professores.nome}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel for="graduacao" value="Graduacao: "/>
+                    <p:selectOneMenu id="graduacao" value="#{recursosControlador.aluno_graduacao_pub}" style="width: 150px">
+                        <f:selectItem itemLabel="Graduacao" itemValue="null" noSelectionOption="true"/>
+                        <f:selectItems value="#{recursosControlador.alunos_graduacao}" var="graduacao" itemLabel="#{graduacao.nome}" itemValue="#{graduacao.nome}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel for="posgraduacao" value="Posgraduacao: "/>
+                    <p:selectOneMenu id="posgraduacao" value="#{recursosControlador.aluno_pos_pub}" style="width: 150px">
+                        <f:selectItem itemLabel="Posgraduacao" itemValue="null" noSelectionOption="true"/>
+                        <f:selectItems value="#{recursosControlador.alunos_posgraduacao}" var="posgraduacao" itemLabel="#{posgraduacao.nome}" itemValue="#{posgraduacao.nome}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel for="pesquisador" value="Pesquisador: "/>
+                    <p:selectOneMenu id="pesquisador" value="#{recursosControlador.pesquisador_pub}" style="width: 150px">
+                        <f:selectItem itemLabel="Pesquisador" itemValue="null" noSelectionOption="true"/>
+                        <f:selectItems value="#{recursosControlador.pesquisadores}" var="pesquisador" itemLabel="#{pesquisador.nome}" itemValue="#{pesquisador.nome}"/>
+                    </p:selectOneMenu>
+
+                    <p:commandButton value="Alocar" update="display" actionListener="#{recursosControlador.apresentarColaboradores}" oncomplete="PF('dlg1').show()" icon="ui-icon-check" />
+
+                    <p:dialog header="Autores da publicacao" modal="true" showEffect="bounce" widgetVar="dlg1" resizable="false">   
+                        <h:outputText id="display" value=""/>
+                    </p:dialog>
+
+                </h:panelGrid>
+            </p:fieldset>
+            <br></br> 
+            <p:fieldset legend="Alocacao de Publicacoes" toggleable="true" toggleSpeed="500">
+
+            </p:fieldset>
+        </h:form>
+    </h:body>
+</html>
+

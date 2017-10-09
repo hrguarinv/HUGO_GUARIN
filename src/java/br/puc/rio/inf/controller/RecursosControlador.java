@@ -10,6 +10,7 @@ import br.puc.rio.inf.model.Pesquisador;
 import br.puc.rio.inf.model.Posgraduacao;
 import br.puc.rio.inf.model.Professor;
 import br.puc.rio.inf.model.Projeto;
+import br.puc.rio.inf.model.Publicacao;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
@@ -28,7 +29,6 @@ public class RecursosControlador implements Serializable {
     private String profesor = null;
     private ArrayList<Professor> professores = new ArrayList<>();
 
-    
     private String aluno_graduacao = null;
     private ArrayList<Graduacao> alunos_graduacao = new ArrayList<>();
 
@@ -43,6 +43,18 @@ public class RecursosControlador implements Serializable {
     private String opcaoStatus = null;
     private String projeto = null;
     private ArrayList<Projeto> projetos = new ArrayList<>();
+
+    private int id_pub = 1;
+    private String tituloPub = null;
+    private String conferenciaPub = null;
+    private String anoPub = null;
+    private String projetoPub = null;
+    private String professorPub = null;
+    private String aluno_pos_pub = null;
+    private String aluno_graduacao_pub = null;
+    private String pesquisador_pub = null;
+    private String mensagem_pub;
+    private ArrayList<Publicacao> publicacoes = new ArrayList<>();
 
     public String getAluno_graduacao() {
         return aluno_graduacao;
@@ -132,8 +144,6 @@ public class RecursosControlador implements Serializable {
         this.mensagem = mensagem;
     }
 
-
-
     public String getOpcaoStatus() {
         return opcaoStatus;
     }
@@ -150,12 +160,100 @@ public class RecursosControlador implements Serializable {
         this.mensagemStatus = mensagemStatus;
     }
 
-    public RecursosControlador(String profesor, String aluno_graduacao, String aluno_posgraduacao, String pesquisador, String projeto) {
-        this.profesor = profesor;
-        this.aluno_graduacao = aluno_graduacao;
-        this.aluno_posgraduacao = aluno_posgraduacao;
-        this.pesquisador = pesquisador;
-        this.projeto = projeto;
+    public String getTituloPub() {
+        return tituloPub;
+    }
+
+    public void setTituloPub(String tituloPub) {
+        this.tituloPub = tituloPub;
+    }
+
+    public String getConferenciaPub() {
+        return conferenciaPub;
+    }
+
+    public void setConferenciaPub(String conferenciaPub) {
+        this.conferenciaPub = conferenciaPub;
+    }
+
+    public String getAnoPub() {
+        return anoPub;
+    }
+
+    public void setAnoPub(String anoPub) {
+        this.anoPub = anoPub;
+    }
+
+    public String getProjetoPub() {
+        return projetoPub;
+    }
+
+    public void setProjetoPub(String projetoPub) {
+        this.projetoPub = projetoPub;
+    }
+
+    public String getProfessorPub() {
+        return professorPub;
+    }
+
+    public void setProfessorPub(String professorPub) {
+        this.professorPub = professorPub;
+    }
+
+    public String getAluno_pos_pub() {
+        return aluno_pos_pub;
+    }
+
+    public void setAluno_pos_pub(String aluno_pos_pub) {
+        this.aluno_pos_pub = aluno_pos_pub;
+    }
+
+    public String getAluno_graduacao_pub() {
+        return aluno_graduacao_pub;
+    }
+
+    public void setAluno_graduacao_pub(String aluno_graduacao_pub) {
+        this.aluno_graduacao_pub = aluno_graduacao_pub;
+    }
+
+    public String getPesquisador_pub() {
+        return pesquisador_pub;
+    }
+
+    public void setPesquisador_pub(String pesquisador_pub) {
+        this.pesquisador_pub = pesquisador_pub;
+    }
+
+    public String getMensagem_pub() {
+        return mensagem_pub;
+    }
+
+    public void setMensagem_pub(String mensagem_pub) {
+        this.mensagem_pub = mensagem_pub;
+    }
+
+    public ArrayList<Publicacao> getPublicacoes() {
+        return publicacoes;
+    }
+
+    public void setPublicacoes(ArrayList<Publicacao> publicacoes) {
+        this.publicacoes = publicacoes;
+    }
+
+    public RecursosControlador(String tituloPub, String conferenciaPub, String anoPub, String projetoPub, String professorPub, String aluno_pos_pub, String aluno_graduacao_pub, String pesquisador_pub, String mensagem_pub) {
+        this.tituloPub = tituloPub;
+        this.conferenciaPub = conferenciaPub;
+        this.anoPub = anoPub;
+        this.projetoPub = projetoPub;
+        this.professorPub = professorPub;
+        this.aluno_pos_pub = aluno_pos_pub;
+        this.aluno_graduacao_pub = aluno_graduacao_pub;
+        this.pesquisador_pub = pesquisador_pub;
+        this.mensagem_pub = mensagem_pub;
+    }
+
+    public RecursosControlador() {
+
     }
 
     @PostConstruct
@@ -218,32 +316,70 @@ public class RecursosControlador implements Serializable {
         pesquisadores.add(pesquisador1);
 
         projeto1.addProfesor(prof1);
+        prof1.addProjeto(projeto1);
+
         projeto1.addGraduacao(grad2);
+        grad2.addProjeto(projeto1);
+
         projeto1.addGraduacao(grad3);
+        grad3.addProjeto(projeto1);
+
         projeto1.addPosgraduacao(posg2);
+        posg2.addProjeto(projeto1);
+
         projeto1.addPosgraduacao(posg3);
+        posg3.addProjeto(projeto1);
+
         projeto1.addPosgraduacao(posg5);
+        posg5.addProjeto(projeto1);
 
         projeto2.addProfesor(prof1);
+        prof1.addProjeto(projeto2);
+
         projeto2.addGraduacao(grad1);
+        grad1.addProjeto(projeto2);
+
         projeto2.addGraduacao(grad2);
+        grad2.addProjeto(projeto2);
+
         projeto2.addPosgraduacao(posg1);
+        posg1.addProjeto(projeto2);
+
         projeto2.addPosgraduacao(posg3);
+        posg3.addProjeto(projeto2);
+
         projeto2.addPosgraduacao(posg5);
+        posg5.addProjeto(projeto2);
 
         projeto3.addProfesor(prof2);
+        prof2.addProjeto(projeto3);
+
         projeto3.addProfesor(prof3);
+        prof3.addProjeto(projeto3);
+
         projeto3.addPesquisador(pesquisador1);
+        pesquisador1.addProjeto(projeto3);
+
         projeto3.addPosgraduacao(posg2);
+        posg2.addProjeto(projeto3);
 
         projeto4.addProfesor(prof1);
+        prof1.addProjeto(projeto4);
+
         projeto4.addGraduacao(grad3);
+        grad3.addProjeto(projeto4);
+
         projeto4.addPesquisador(pesquisador1);
+        pesquisador1.addProjeto(projeto4);
+
         projeto4.addPosgraduacao(posg6);
+        posg6.addProjeto(projeto4);
 
         projeto4.addProfesor(prof2);
+        prof2.addProjeto(projeto4);
 
         projeto5.addProfesor(prof3);
+        prof3.addProjeto(projeto5);
 
         projetos.add(projeto1);
         projetos.add(projeto2);
@@ -253,11 +389,16 @@ public class RecursosControlador implements Serializable {
 
     }
 
-    public RecursosControlador() {
+    public void criarPublicacao() {
 
+        int posProj = procurarProjeto(projetoPub);
+        Publicacao publicacao = new Publicacao(id_pub, tituloPub, conferenciaPub, anoPub, projetos.get(posProj));
+        projetos.get(posProj).addPublicacao(publicacao);
+        id_pub += 1;
+        publicacoes.add(publicacao);
     }
 
-    public int procurarProjeto() {
+    public int procurarProjeto(String projeto) {
         int pos = 0;
         for (int x = 0; x < projetos.size(); x++) {
             if (projetos.get(x).getId().equals(projeto)) {
@@ -385,7 +526,7 @@ public class RecursosControlador implements Serializable {
 
     public void alocarColaboradores() {
         mensagem = "";
-        int posProj = procurarProjeto();
+        int posProj = procurarProjeto(projeto);
         int posProf = procurarProfessor();
         int posPos = procurarPosgraduacao();
         int posgrad = procurarGraduacao();
@@ -404,6 +545,7 @@ public class RecursosControlador implements Serializable {
             } else {
                 if (professorRepetido(posProj) == false) {
                     projetos.get(posProj).addProfesor(professores.get(posProf));
+                    professores.get(posProf).addProjeto(projetos.get(posProj));
                     mensagem += "Professor: " + profesor + " - ";
                 } else {
                     mensagem = " [O professor já faz parte do projeto] ";
@@ -414,6 +556,7 @@ public class RecursosControlador implements Serializable {
             } else {
                 if (posgraduacaoRepetido(posProj) == false) {
                     projetos.get(posProj).addPosgraduacao(alunos_posgraduacao.get(posPos));
+                    alunos_posgraduacao.get(posPos).addProjeto(projetos.get(posProj));
                     mensagem += " Posgraduacao: " + aluno_posgraduacao + " - ";
                 } else {
                     mensagem = " [O aluno da posgraduacao já faz parte do projeto] ";
@@ -424,6 +567,7 @@ public class RecursosControlador implements Serializable {
             } else {
                 if (pesquisadorRepetido(posProj) == false) {
                     projetos.get(posProj).addPesquisador(pesquisadores.get(posPes));
+                    pesquisadores.get(posPes).addProjeto(projetos.get(posProj));
                     mensagem += " Pesquisador: " + pesquisador + " - ";
                 } else {
                     mensagem = " [O pesquisador já faz parte do projeto] ";
@@ -435,6 +579,7 @@ public class RecursosControlador implements Serializable {
                 } else {
                     if (graduacaoRepetido(posProj) == false) {
                         projetos.get(posProj).addGraduacao(alunos_graduacao.get(posgrad));
+                        alunos_graduacao.get(posgrad).addProjeto(projetos.get(posProj));
                         mensagem += " Graduacao: " + aluno_graduacao;
                     } else {
                         mensagem = " [O aluno da graduacao já faz parte do projeto] ";
@@ -447,7 +592,7 @@ public class RecursosControlador implements Serializable {
     }
 
     public boolean verificarInformacoes() {
-        int posProj = procurarProjeto();
+        int posProj = procurarProjeto(projeto);
         if (projetos.get(posProj).getAgenciaFinanciadora() != null && projetos.get(posProj).getDataInicio() != null && projetos.get(posProj).getDataTermino() != null
                 && projetos.get(posProj).getDescricao() != null && projetos.get(posProj).getObjetivo() != null
                 && projetos.get(posProj).getTitulo() != null && projetos.get(posProj).getValor() != null) {
@@ -457,9 +602,18 @@ public class RecursosControlador implements Serializable {
         }
     }
 
+    public boolean verificarPublicacoes() {
+        int posProj = procurarProjeto(projeto);
+        if (projetos.get(posProj).getPublicacoes().size() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public void alterarStatus() {
         mensagemStatus = "";
-        int posProj = procurarProjeto();
+        int posProj = procurarProjeto(projeto);
         if (opcaoStatus.equals("null")) {
             mensagemStatus = "Selecione uma opcao para alterar o status do projeto";
         } else {
@@ -475,10 +629,21 @@ public class RecursosControlador implements Serializable {
                     }
                 }
             }
-            // Fazer a parte de Em Andamento para Concluido
+            if (opcaoStatus.equals("Concluido")) {
+                if (verificarPublicacoes() == true && projetos.get(posProj).getStatus().equals("Em Andamento")) {
+                    projetos.get(posProj).setStatus("Concluido");
+                    mensagemStatus = "O status do projeto foi alterado para Concluido";
+                } else {
+                    if (verificarPublicacoes() == false) {
+                        mensagemStatus = "Nao é possivel alterar o status do projeto porque ele nao tem publicacoes asociadas";
+                    } else {
+                        mensagemStatus = "Nao é possivel Concluir o projeto sem o projeto estar Em Andamento";
+                    }
+                }
+            }
         }
     }
-    
+
     public void apresentarColaboradores() {
         for (int i = 0; i < professores.size(); i++) {
             System.out.println("Nome: " + professores.get(i).getNome() + " Afiliacao: " + professores.get(i).getAfiliacao());

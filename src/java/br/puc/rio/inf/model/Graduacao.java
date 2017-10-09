@@ -5,37 +5,42 @@
  */
 package br.puc.rio.inf.model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Toshiba1
  */
 public class Graduacao extends Colaborador {
-    
+
     private String data;
     private Professor orientador;
 
-        public Graduacao(String data, Professor orientador, String Id, String nome, String email) {
-            super(Id, nome, email);
-            this.data = data;
-            this.orientador = orientador;
-        }
-        
-        // metodos da clase graduacao
+    public Graduacao(String data, Professor orientador, String Id, String nome, String email) {
+        super(Id, nome, email);
+        this.data = data;
+        this.orientador = orientador;
+    }
 
-        public String getData() {
-            return data;
-        }
+    public Graduacao() {
 
-        public void setData(String data) {
-            this.data = data;
-        }
+    }
 
-        public Professor getOrientador() {
-            return orientador;
-        }
+    // metodos da clase graduacao
+    public String getData() {
+        return data;
+    }
 
-        public void setOrientador(Professor orientador) {
-            this.orientador = orientador;
-        }
-    
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public Professor getOrientador() {
+        return orientador;
+    }
+
+    public void setOrientador(Professor orientador) {
+        this.orientador = orientador;
+    }
+
 }

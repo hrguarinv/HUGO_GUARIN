@@ -5,6 +5,7 @@
  */
 package br.puc.rio.inf.model;
 
+import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -15,7 +16,6 @@ import javax.faces.bean.SessionScoped;
 
 @ManagedBean
 @SessionScoped
-
 public class Professor extends Colaborador {
     
     private String afiliacao;

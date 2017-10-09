@@ -25,6 +25,7 @@ public class Projeto {
     private ArrayList<Graduacao> alunos_graduacao = new ArrayList<>();
     private ArrayList<Posgraduacao> alunos_pos = new ArrayList<>();
     private ArrayList<Pesquisador> pesquisadores = new ArrayList<>();
+    private ArrayList<Publicacao> publicacoes = new ArrayList<>();
 
     public Projeto(String id, String titulo, String dataInicio, String dataTermino, String agenciaFinanciadora, String valor, String objetivo, String descricao, String status) {
         this.id = id;
@@ -146,6 +147,14 @@ public class Projeto {
     public void setPesquisadores(ArrayList<Pesquisador> pesquisadores) {
         this.pesquisadores = pesquisadores;
     }
+
+    public ArrayList<Publicacao> getPublicacoes() {
+        return publicacoes;
+    }
+
+    public void setPublicacoes(ArrayList<Publicacao> publicacoes) {
+        this.publicacoes = publicacoes;
+    }
     
     public void addProfesor(Professor profesor){
         this.profesores.add(profesor);
@@ -161,5 +170,9 @@ public class Projeto {
     
     public void addPesquisador(Pesquisador pesquisador){
         this.pesquisadores.add(pesquisador);
+    }
+    
+    public void addPublicacao(Publicacao publicacao){
+        this.publicacoes.add(publicacao);
     }
 }

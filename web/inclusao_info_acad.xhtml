@@ -17,12 +17,12 @@
                     <p:commandButton value="Logout" icon="ui-icon-extlink" action="#{usuarioLoginView.logout()}" style="margin-right:10px"/>
                 </f:facet>
             </p:menubar>
-
+            <br></br>
             <p:panel>
                 <h:outputText
                     value="Publicacoes do sistema do Laboratorio" /> 
             </p:panel>
-            <br></br><br></br> 
+            <br></br>
             <p:dataTable var="publicacao" value="#{recursosControlador.publicacoes}">
                 <p:column headerText="Id" style="width: 15px">
                     <h:outputText value="#{publicacao.id}" />
@@ -41,19 +41,19 @@
                 </p:column>
                 
                 <p:column headerText="Professores" style="width: 70px">
-                    <h:outputText value="#{publicacao.projeto.profesores}" />
+                    <h:outputText value="#{publicacao.profesores}" />
                 </p:column>
                 
                 <p:column headerText="Graduacao" style="width: 70px">
-                    <h:outputText value="#{publicacao.projeto.alunos_graduacao}" />
+                    <h:outputText value="#{publicacao.alunos_graduacao}" />
                 </p:column>
                 
                 <p:column headerText="Posgraduacao" style="width: 70px">
-                    <h:outputText value="#{publicacao.projeto.alunos_pos}" />
+                    <h:outputText value="#{publicacao.alunos_posgraduacao}" />
                 </p:column>
                 
                 <p:column headerText="Pesquisadores" style="width: 50px">
-                    <h:outputText value="#{publicacao.projeto.pesquisadores}" />
+                    <h:outputText value="#{publicacao.pesquisadores}" />
                 </p:column>
                 
             </p:dataTable>
@@ -61,38 +61,48 @@
         <br></br><br></br> 
         <h:form>
             <p:growl id="msgs" showDetail="true" />
-            <p:fieldset legend="Criar publicacao" toggleable="true" toggleSpeed="500">
+            <p:fieldset legend="Dados publicacao" toggleable="true" toggleSpeed="500" collapsed="true">
                 <p:ajax event="toggle" listener="#{fieldsetView.handleToggle}" update="msgs" />
-                <h:panelGrid columns="6" cellpadding="5">
+                <h:panelGrid columns="8" cellpadding="5">
 
                     <p:outputLabel for="titulo" value="Titulo: " />
-                    <p:inputText id="titulo"  required="true" value="#{recursosControlador.tituloPub}"/>
-                    <p:message for="titulo"/>
+                    <p:inputText id="titulo" required="true" value="#{recursosControlador.tituloPub}"/>
 
                     <p:outputLabel for="conferencia" value="Conferencia: " />
                     <p:inputText id="conferencia" required="true" value="#{recursosControlador.conferenciaPub}"/>
-                    <p:message for="conferencia"/>
 
                     <p:outputLabel for="ano" value="Ano: " />
                     <p:inputText id="ano" required="true" value="#{recursosControlador.anoPub}"/>
-                    <p:message for="ano"/>
 
                     <p:outputLabel for="projetos" value="Projetos: "/>
-                    <p:selectOneMenu id="projetos" value="#{recursosControlador.projetoPub}" style="width: 150px">
+                    <p:selectOneMenu id="projetos" value="#{recursosControlador.projetoPub}" style="width: 200px">
                         <f:selectItem itemLabel="Projetos" itemValue="null" noSelectionOption="true"/>
                         <f:selectItems value="#{recursosControlador.projetos}" var="projetos" itemLabel="#{projetos.id}" itemValue="#{projetos.id}"/>
                     </p:selectOneMenu>
+                    
+                    <h:outputText value=""/>
 
-                    <p:commandButton value="Alocar" update="display1" actionListener="#{recursosControlador.criarPublicacao()}" oncomplete="PF('dlg1').show()" icon="ui-icon-check" />
+                    <p:commandButton value="Criar" style="width: 200px" update="display1" actionListener="#{recursosControlador.criarPublicacao()}" oncomplete="PF('dlg1').show()" icon="ui-icon-check" />
+                    
                     <p:dialog header="Colaboradores alocados no projeto" modal="true" showEffect="bounce" widgetVar="dlg1" resizable="false">   
                         <h:outputText id="display1" value="#{recursosControlador.mensagem_pub}"/>
                     </p:dialog>
                 </h:panelGrid>
             </p:fieldset>
-            <br></br> 
-            <p:fieldset legend="Autores" toggleable="true" toggleSpeed="500">
+        </h:form>
+        <br></br> 
+        <h:form>
+            <p:growl id="msgs" showDetail="true" />
+            <p:fieldset legend="Autores" toggleable="true" toggleSpeed="500"  collapsed="true">
                 <p:ajax event="toggle" listener="#{fieldsetView.handleToggle}" update="msgs" />
-                <h:panelGrid columns="6" cellpadding="5">
+                <h:panelGrid columns="8" cellpadding="5">
+                    
+                    <p:outputLabel for="publicacao" value="Publicacao: "/>
+                    <p:selectOneMenu id="publicacao" required="true" value="#{recursosControlador.publicacao}" style="width: 150px">
+                        <f:selectItem itemLabel="Publicacao" itemValue="null" noSelectionOption="true"/>
+                        <f:selectItems value="#{recursosControlador.publicacoes}" var="publicacao" itemLabel="#{publicacao.id}" itemValue="#{publicacao.id}"/>
+                    </p:selectOneMenu>
+                    
                     <p:outputLabel for="professores" value="Professores: "/>
                     <p:selectOneMenu id="professores" value="#{recursosControlador.professorPub}" style="width: 150px">
                         <f:selectItem itemLabel="Professores" itemValue="null" noSelectionOption="true"/>
@@ -117,16 +127,18 @@
                         <f:selectItems value="#{recursosControlador.pesquisadores}" var="pesquisador" itemLabel="#{pesquisador.nome}" itemValue="#{pesquisador.nome}"/>
                     </p:selectOneMenu>
 
-                    <p:commandButton value="Alocar" update="display" actionListener="#{recursosControlador.apresentarColaboradores}" oncomplete="PF('dlg1').show()" icon="ui-icon-check" />
+                    <h:outputText value=""/>
+                    
+                    <p:commandButton value="Alocar" style="width:150px" update="display" actionListener="#{recursosControlador.colaboradorPublicacao()}" oncomplete="PF('dlg1').show()" icon="ui-icon-check" />
 
                     <p:dialog header="Autores da publicacao" modal="true" showEffect="bounce" widgetVar="dlg1" resizable="false">   
-                        <h:outputText id="display" value=""/>
+                        <h:outputText id="display" value="#{recursosControlador.mensagem_pub}"/>
                     </p:dialog>
 
                 </h:panelGrid>
             </p:fieldset>
             <br></br> 
-            <p:fieldset legend="Alocacao de Publicacoes" toggleable="true" toggleSpeed="500">
+            <p:fieldset legend="Orientacoes" toggleable="true" toggleSpeed="500" collapsed="true">
 
             </p:fieldset>
         </h:form>

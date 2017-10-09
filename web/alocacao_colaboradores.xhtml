@@ -26,7 +26,7 @@
                 <h:outputText
                     value="Antes de fazer mudancas no projeto, por favor veja os colaboradores alocados em cada projeto" /> 
             </p:panel>
-
+            <br></br>
             <p:dataTable var="projeto" value="#{recursosControlador.projetos}">
                 <p:column headerText="Id" style="width: 50px">
                     <h:outputText value="#{projeto.id}" />
@@ -57,11 +57,11 @@
         <br></br><br></br>
         <h:form>
             <p:growl id="msgs" showDetail="true" />
-            <p:fieldset legend="Alocacao de colaboradores" toggleable="true" toggleSpeed="500">
+            <p:fieldset legend="Alocacao de colaboradores" toggleable="true" toggleSpeed="500" collapsed="true">
                 <p:ajax event="toggle" listener="#{fieldsetView.handleToggle}" update="msgs" />
                 <h:panelGrid columns="6" cellpadding="5">
                     <p:outputLabel for="projetos" value="Projetos: "/>
-                    <p:selectOneMenu id="projetos" value="#{recursosControlador.projeto}" style="width: 150px">
+                    <p:selectOneMenu id="projetos" required="true" value="#{recursosControlador.projeto}" style="width: 150px">
                         <f:selectItem itemLabel="Projetos" itemValue="" noSelectionOption="true"/>
                         <f:selectItems value="#{recursosControlador.projetos}" var="projetos" itemLabel="#{projetos.id}" itemValue="#{projetos.id}"/>
                     </p:selectOneMenu>
@@ -90,7 +90,9 @@
                         <f:selectItems value="#{recursosControlador.pesquisadores}" var="pesquisador" itemLabel="#{pesquisador.nome}" itemValue="#{pesquisador.nome}"/>
                     </p:selectOneMenu>
 
-                    <p:commandButton value="Alocar" update="display1" actionListener="#{recursosControlador.alocarColaboradores()}" oncomplete="PF('dlg1').show()" icon="ui-icon-check" />
+                    <h:outputText value=""/>
+                    
+                    <p:commandButton value="Alocar" style="width: 150px" update="display1" actionListener="#{recursosControlador.alocarColaboradores()}" oncomplete="PF('dlg1').show()" icon="ui-icon-check" />
 
 
                     <p:dialog header="Colaboradores alocados no projeto" modal="true" showEffect="bounce" widgetVar="dlg1" resizable="false">   

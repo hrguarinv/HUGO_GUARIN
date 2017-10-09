@@ -11,18 +11,18 @@
         <h:form>
             <p:growl id="messages"/>
             <p:messages autoUpdate="true" />
-            <p:menubar>
+            <p:menubar style="width: 800px">
                 <f:facet name="options">
                     <p:commandButton value="Logout" icon="ui-icon-extlink" action="#{usuarioLoginView.logout()}" style="margin-right:10px"/>
                 </f:facet>
             </p:menubar>
-
-            <p:panel>
+            <br></br>
+            <p:panel style="width: 800px">
                 <h:outputText
                     value="Modulos do sistema do laboratorio" /> 
             </p:panel>
-
-            <p:panel header="Modulos" style="width: 600px">
+            <br></br>
+            <p:panel header="Modulos" style="width: 800px">
                 <h:panelGrid id="grid" columns="4" cellpadding="5">
                     <p:commandButton value="Alocar colaboradores" update="grid" icon="ui-icon-check" action="alocacao_colaboradores" validateClient="true" style="margin-right:10px"/>
                     <p:commandButton value="Alterar status dos projetos" update="grid" icon="ui-icon-check" action="alteracao_status" validateClient="true" style="margin-right:10px"/>

@@ -53,7 +53,8 @@ public class RecursosControlador implements Serializable {
     private String aluno_pos_pub = null;
     private String aluno_graduacao_pub = null;
     private String pesquisador_pub = null;
-    private String mensagem_pub;
+    private String mensagem_pub = null;
+    private String publicacao = null;
     private ArrayList<Publicacao> publicacoes = new ArrayList<>();
 
     public String getAluno_graduacao() {
@@ -240,6 +241,22 @@ public class RecursosControlador implements Serializable {
         this.publicacoes = publicacoes;
     }
 
+    public int getId_pub() {
+        return id_pub;
+    }
+
+    public void setId_pub(int id_pub) {
+        this.id_pub = id_pub;
+    }
+
+    public String getPublicacao() {
+        return publicacao;
+    }
+
+    public void setPublicacao(String publicacao) {
+        this.publicacao = publicacao;
+    }
+
     public RecursosControlador(String tituloPub, String conferenciaPub, String anoPub, String projetoPub, String professorPub, String aluno_pos_pub, String aluno_graduacao_pub, String pesquisador_pub, String mensagem_pub) {
         this.tituloPub = tituloPub;
         this.conferenciaPub = conferenciaPub;
@@ -390,26 +407,38 @@ public class RecursosControlador implements Serializable {
     }
 
     public void criarPublicacao() {
-
+        mensagem_pub = "";
         int posProj = procurarProjeto(projetoPub);
-        Publicacao publicacao = new Publicacao(id_pub, tituloPub, conferenciaPub, anoPub, projetos.get(posProj));
-        projetos.get(posProj).addPublicacao(publicacao);
-        id_pub += 1;
-        publicacoes.add(publicacao);
+        if (posProj == 50) {
+            Publicacao newpublicacao = new Publicacao(id_pub, tituloPub, conferenciaPub, anoPub, null);
+            id_pub += 1;
+            publicacoes.add(newpublicacao);
+            mensagem_pub = "A publicacao foi criada com sucesso";
+        } else {
+            if (projetos.get(posProj).getStatus().equals("Em Andamento")) {
+                Publicacao newpublicacao = new Publicacao(id_pub, tituloPub, conferenciaPub, anoPub, projetos.get(posProj));
+                projetos.get(posProj).addPublicacao(newpublicacao);
+                id_pub += 1;
+                publicacoes.add(newpublicacao);
+                mensagem_pub = "A publicacao foi criada com sucesso";
+            }
+            else{
+                mensagem_pub = "A publicacao só pode ser feita se o projeto estiver com status Em Andamento";
+            }
+        }
+
     }
 
     public int procurarProjeto(String projeto) {
-        int pos = 0;
         for (int x = 0; x < projetos.size(); x++) {
             if (projetos.get(x).getId().equals(projeto)) {
-                pos = x;
-                return pos;
+                return x;
             }
         }
-        return pos;
+        return 50;
     }
 
-    public int procurarProfessor() {
+    public int procurarProfessor(String profesor) {
         int pos = 0;
         for (int y = 0; y < professores.size(); y++) {
             if (professores.get(y).getNome().equals(profesor)) {
@@ -420,7 +449,7 @@ public class RecursosControlador implements Serializable {
         return pos;
     }
 
-    public int procurarGraduacao() {
+    public int procurarGraduacao(String aluno_graduacao) {
         int pos = 0;
         for (int z = 0; z < alunos_graduacao.size(); z++) {
             if (alunos_graduacao.get(z).getNome().equals(aluno_graduacao)) {
@@ -431,7 +460,7 @@ public class RecursosControlador implements Serializable {
         return pos;
     }
 
-    public int procurarPosgraduacao() {
+    public int procurarPosgraduacao(String aluno_posgraduacao) {
         int pos = 0;
         for (int z = 0; z < alunos_posgraduacao.size(); z++) {
             if (alunos_posgraduacao.get(z).getNome().equals(aluno_posgraduacao)) {
@@ -442,10 +471,21 @@ public class RecursosControlador implements Serializable {
         return pos;
     }
 
-    public int procurarPesquisador() {
+    public int procurarPesquisador(String pesquisador) {
         int pos = 0;
         for (int z = 0; z < pesquisadores.size(); z++) {
             if (pesquisadores.get(z).getNome().equals(pesquisador)) {
+                pos = z;
+                return pos;
+            }
+        }
+        return pos;
+    }
+
+    public int procurarPublicaco(int id_pub) {
+        int pos = 0;
+        for (int z = 0; z < publicacoes.size(); z++) {
+            if (publicacoes.get(z).getId() == id_pub) {
                 pos = z;
                 return pos;
             }
@@ -462,9 +502,29 @@ public class RecursosControlador implements Serializable {
         return false;
     }
 
+    public boolean professorRepetido_pub(int posProf) {
+        int pub = Integer.parseInt(publicacao);
+        for (int x = 0; x < professores.get(posProf).getPublicacoes().size(); x++) {
+            if (professores.get(posProf).getPublicacoes().get(x).getId() == pub) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean graduacaoRepetido(int posProj) {
         for (int x = 0; x < projetos.get(posProj).getAlunos_graduacao().size(); x++) {
             if (projetos.get(posProj).getAlunos_graduacao().get(x).getNome().equals(aluno_graduacao)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean aluno_grad_Repetido_pub(int posgrad) {
+        int pub = Integer.parseInt(publicacao);
+        for (int x = 0; x < alunos_graduacao.get(posgrad).getPublicacoes().size(); x++) {
+            if (alunos_graduacao.get(posgrad).getPublicacoes().get(x).getId() == pub) {
                 return true;
             }
         }
@@ -480,9 +540,29 @@ public class RecursosControlador implements Serializable {
         return false;
     }
 
+    public boolean aluno_pos_Repetido_pub(int posPos) {
+        int pub = Integer.parseInt(publicacao);
+        for (int x = 0; x < alunos_posgraduacao.get(posPos).getPublicacoes().size(); x++) {
+            if (alunos_posgraduacao.get(posPos).getPublicacoes().get(x).getId() == pub) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean pesquisadorRepetido(int posProj) {
         for (int x = 0; x < projetos.get(posProj).getPesquisadores().size(); x++) {
             if (projetos.get(posProj).getPesquisadores().get(x).getNome().equals(pesquisador)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean pesquisador_Repetido_pub(int posPes) {
+        int pub = Integer.parseInt(publicacao);
+        for (int x = 0; x < pesquisadores.get(posPes).getPublicacoes().size(); x++) {
+            if (pesquisadores.get(posPes).getPublicacoes().get(x).getId() == pub) {
                 return true;
             }
         }
@@ -527,10 +607,10 @@ public class RecursosControlador implements Serializable {
     public void alocarColaboradores() {
         mensagem = "";
         int posProj = procurarProjeto(projeto);
-        int posProf = procurarProfessor();
-        int posPos = procurarPosgraduacao();
-        int posgrad = procurarGraduacao();
-        int posPes = procurarPesquisador();
+        int posProf = procurarProfessor(profesor);
+        int posPos = procurarPosgraduacao(aluno_posgraduacao);
+        int posgrad = procurarGraduacao(aluno_graduacao);
+        int posPes = procurarPesquisador(pesquisador);
 
         if (verificarAlocacao1() == false) {
             if (projeto.equals("")) {
@@ -641,6 +721,57 @@ public class RecursosControlador implements Serializable {
                     }
                 }
             }
+        }
+    }
+
+    public void colaboradorPublicacao() {
+        int posProf = procurarProfessor(professorPub);
+        int posPos = procurarPosgraduacao(aluno_pos_pub);
+        int posgrad = procurarGraduacao(aluno_graduacao_pub);
+        int posPes = procurarPesquisador(pesquisador_pub);
+        int posPub = procurarPublicaco(id_pub);
+        mensagem_pub = "";
+        if (professorPub.equals("null") && aluno_graduacao_pub.equals("null") && aluno_pos_pub.equals("null") && pesquisador_pub.equals("null")) {
+            mensagem_pub = "Selecione um colaborador que será o autor da publicacao";
+        } else {
+            if (!"null".equals(professorPub) && professorRepetido_pub(posProf) == false) {
+                professores.get(posProf).addPublicacao(publicacoes.get(posPub));
+                publicacoes.get(posPub).addProfesor(professores.get(posProf));
+                mensagem_pub = " [" + professorPub + "] ";
+            } else {
+                if (!"null".equals(professorPub)) {
+                    mensagem_pub = "O professor já é um autor da publicacao - ";
+                }
+            }
+            if (!"null".equals(aluno_graduacao_pub) && aluno_grad_Repetido_pub(posgrad) == false) {
+                alunos_graduacao.get(posgrad).addPublicacao(publicacoes.get(posPub));
+                publicacoes.get(posPub).addGraduacao(alunos_graduacao.get(posgrad));
+                mensagem_pub += " [" + aluno_graduacao_pub + "] ";
+            } else {
+                if (!"null".equals(aluno_graduacao_pub)) {
+                    mensagem_pub += "O aluno de graduacao já é um autor da publicacao - ";
+                }
+            }
+            if (!"null".equals(aluno_pos_pub) && aluno_pos_Repetido_pub(posPos) == false) {
+                alunos_posgraduacao.get(posPos).addPublicacao(publicacoes.get(posPub));
+                publicacoes.get(posPub).addPosgraduacao(alunos_posgraduacao.get(posPos));
+                mensagem_pub += " [" + aluno_pos_pub + "] ";
+            } else {
+                if (!"null".equals(aluno_pos_pub)) {
+                    mensagem_pub += "O aluno de posgraduacao já é um autor da publicacao - ";
+                }
+            }
+            if (!"null".equals(pesquisador_pub) && pesquisador_Repetido_pub(posPes) == false) {
+                pesquisadores.get(posPes).addPublicacao(publicacoes.get(posPub));
+                publicacoes.get(posPub).addPesquisador(pesquisadores.get(posPes));
+                mensagem_pub += " [" + pesquisador_pub + "] ";
+            } else {
+                if (!"null".equals(pesquisador_pub)) {
+                    mensagem_pub += " O pesquisador já é um autor da publicacao";
+                }
+
+            }
+
         }
     }
 

@@ -17,13 +17,14 @@
                     <p:commandButton value="Logout" icon="ui-icon-extlink" action="#{usuarioLoginView.logout()}" style="margin-right:10px"/>
                 </f:facet>
             </p:menubar>
+            <br></br>
             <p:panel>
                 <h:outputText
                     value="Tenha em conta a informacao dos projetos para fazer alteracoes" /> 
             </p:panel>
-
+            <br></br>
             <p:dataTable var="projeto" value="#{recursosControlador.projetos}">
-                <p:column headerText="Id" style="width: 20px">
+                <p:column headerText="Id" style="width: 10px">
                     <h:outputText value="#{projeto.id}" />
                 </p:column>
 
@@ -56,28 +57,26 @@
         <br></br><br></br>
         <h:form>
             <p:growl id="msgs" showDetail="true" />
-            <p:fieldset legend="Alteracao do status" toggleable="true" toggleSpeed="500">
+            <p:fieldset legend="Alteracao do status" toggleable="true" toggleSpeed="500" collapsed="true">
                 <p:ajax event="toggle" listener="#{fieldsetView.handleToggle}" update="msgs" />
 
-                <h:panelGrid id="grid" columns="4" cellpadding="5">
+                <h:panelGrid id="grid" columns="6" cellpadding="5">
 
                     <p:outputLabel for="projetos" value="Projetos: "/>
-                    <p:selectOneMenu id="projetos" value="#{recursosControlador.projeto}" style="width: 150px">
+                    <p:selectOneMenu id="projetos" required="true" value="#{recursosControlador.projeto}" style="width: 150px">
                         <f:selectItem itemLabel="Projetos" itemValue="" noSelectionOption="true"/>
                         <f:selectItems value="#{recursosControlador.projetos}" var="projetos" itemLabel="#{projetos.id}" itemValue="#{projetos.id}"/>
                     </p:selectOneMenu>
-                    <p:message for="projetos"/>
-                    <br /><br />
                     <p:outputLabel for="status" value="Status: "/>
-                    <p:selectOneMenu id="status" value="#{recursosControlador.opcaoStatus}" style="width: 150px">
+                    <p:selectOneMenu id="status"  required="true" value="#{recursosControlador.opcaoStatus}" style="width: 150px">
                         <f:selectItem itemLabel="Status" itemValue="null" noSelectionOption="true"/>
                         <f:selectItem itemValue="Em Elaboracao" itemLabel="Em Elaboracao"/>
                         <f:selectItem itemValue="Em Andamento" itemLabel="Em Andamento"/>
                         <f:selectItem itemValue="Concluido" itemLabel="Concluido"/>
                     </p:selectOneMenu>
-                    <p:message for="status"/>
-                    <br></br><br></br>
-                    <p:separator></p:separator>
+                    
+                    <h:outputText value=""/>
+                    
                     <p:commandButton value="Alterar" update="display" actionListener="#{recursosControlador.alterarStatus()}" oncomplete="PF('dlg1').show()" icon="ui-icon-check" />
 
                     <p:dialog header="Colaboradores alocados no projeto" modal="true" showEffect="bounce" widgetVar="dlg1" resizable="false">   
@@ -86,6 +85,7 @@
 
                 </h:panelGrid>
             </p:fieldset>
-        </h:form>  
+        </h:form>
+        <br></br><br></br>
     </h:body>
 </html>

@@ -16,11 +16,32 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class Orientacao {
     
+    private int id_orientacao;
     private Professor profesor;
     private Graduacao graduacao;
     private Posgraduacao posgraduacao;  
     private String dissertacao;
 
+    public Orientacao(int id_orientacao, Professor profesor, Graduacao graduacao, Posgraduacao posgraduacao, String dissertacao) {
+        this.id_orientacao = id_orientacao;
+        this.profesor = profesor;
+        this.graduacao = graduacao;
+        this.posgraduacao = posgraduacao;
+        this.dissertacao = dissertacao;
+    }
+
+    public Orientacao(){
+        
+    }
+    
+    public int getId_orientacao() {
+        return id_orientacao;
+    }
+
+    public void setId_orientacao(int id_orientacao) {
+        this.id_orientacao = id_orientacao;
+    }
+    
     public Professor getProfesor() {
         return profesor;
     }

@@ -5,31 +5,20 @@
  */
 package br.puc.rio.inf.model;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Toshiba1
  */
-public class Posgraduacao extends Colaborador {
+public class Posgraduacao extends Aluno {
 
     private String Regcurso;
-    private Professor orientador;
-    private String data;
     private boolean tipo;
 
-    public Posgraduacao(String Regcurso, Professor orientador, String data, boolean tipo, String Id, String nome, String email) {
-        super(Id, nome, email);
+    public Posgraduacao(String Regcurso, boolean tipo, Orientacao orientacao, String data, String Id, String nome, String email) {
+        super(orientacao, data, Id, nome, email);
         this.Regcurso = Regcurso;
-        this.orientador = orientador;
-        this.data = data;
         this.tipo = tipo;
     }
-
-    public Posgraduacao() {
-
-    }
-    // metodos da clase Posgraduacao
 
     public String getRegcurso() {
         return Regcurso;
@@ -37,22 +26,6 @@ public class Posgraduacao extends Colaborador {
 
     public void setRegcurso(String Regcurso) {
         this.Regcurso = Regcurso;
-    }
-
-    public Professor getOrientador() {
-        return orientador;
-    }
-
-    public void setOrientador(Professor orientador) {
-        this.orientador = orientador;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
     }
 
     public boolean isTipo() {

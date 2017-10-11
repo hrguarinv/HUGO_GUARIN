@@ -69,8 +69,6 @@ public class Colaborador {
         this.publicacoes = publicacoes;
     }
 
-    
-    
     public void addProjeto(Projeto projeto){
         this.projetos.add(projeto);
     }

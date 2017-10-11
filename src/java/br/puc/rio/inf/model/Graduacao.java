@@ -5,21 +5,14 @@
  */
 package br.puc.rio.inf.model;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Toshiba1
  */
-public class Graduacao extends Colaborador {
+public class Graduacao extends Aluno {
 
-    private String data;
-    private Professor orientador;
-
-    public Graduacao(String data, Professor orientador, String Id, String nome, String email) {
-        super(Id, nome, email);
-        this.data = data;
-        this.orientador = orientador;
+    public Graduacao(Orientacao orientacao, String data, String Id, String nome, String email) {
+        super(orientacao, data, Id, nome, email);
     }
 
     public Graduacao() {
@@ -27,20 +20,7 @@ public class Graduacao extends Colaborador {
     }
 
     // metodos da clase graduacao
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
-    }
-
-    public Professor getOrientador() {
-        return orientador;
-    }
-
-    public void setOrientador(Professor orientador) {
-        this.orientador = orientador;
-    }
+    
+    
 
 }

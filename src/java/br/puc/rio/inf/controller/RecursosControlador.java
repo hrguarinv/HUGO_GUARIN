@@ -6,6 +6,7 @@
 package br.puc.rio.inf.controller;
 
 import br.puc.rio.inf.model.Graduacao;
+import br.puc.rio.inf.model.Orientacao;
 import br.puc.rio.inf.model.Pesquisador;
 import br.puc.rio.inf.model.Posgraduacao;
 import br.puc.rio.inf.model.Professor;
@@ -56,6 +57,14 @@ public class RecursosControlador implements Serializable {
     private String mensagem_pub = null;
     private String publicacao = null;
     private ArrayList<Publicacao> publicacoes = new ArrayList<>();
+
+    private int id_diss = 1;
+    private String dissertacao = null;
+    private String professor_diss = null;
+    private String alunopos_diss = null;
+    private String alunograd_diss = null;
+    private String mensagem_diss = null;
+    private ArrayList<Orientacao> orientacoes = new ArrayList<>();
 
     public String getAluno_graduacao() {
         return aluno_graduacao;
@@ -257,6 +266,62 @@ public class RecursosControlador implements Serializable {
         this.publicacao = publicacao;
     }
 
+    public String getDissertacao() {
+        return dissertacao;
+    }
+
+    public void setDissertacao(String dissertacao) {
+        this.dissertacao = dissertacao;
+    }
+
+    public String getProfessor_diss() {
+        return professor_diss;
+    }
+
+    public void setProfessor_diss(String professor_diss) {
+        this.professor_diss = professor_diss;
+    }
+
+    public String getAlunopos_diss() {
+        return alunopos_diss;
+    }
+
+    public void setAlunopos_diss(String alunopos_diss) {
+        this.alunopos_diss = alunopos_diss;
+    }
+
+    public String getAlunograd_diss() {
+        return alunograd_diss;
+    }
+
+    public void setAlunograd_diss(String alunograd_diss) {
+        this.alunograd_diss = alunograd_diss;
+    }
+
+    public String getMensagem_diss() {
+        return mensagem_diss;
+    }
+
+    public void setMensagem_diss(String mensagem_diss) {
+        this.mensagem_diss = mensagem_diss;
+    }
+
+    public ArrayList<Orientacao> getOrientacoes() {
+        return orientacoes;
+    }
+
+    public void setOrientacoes(ArrayList<Orientacao> orientacoes) {
+        this.orientacoes = orientacoes;
+    }
+
+    public int getId_diss() {
+        return id_diss;
+    }
+
+    public void setId_diss(int id_diss) {
+        this.id_diss = id_diss;
+    }
+
     public RecursosControlador(String tituloPub, String conferenciaPub, String anoPub, String projetoPub, String professorPub, String aluno_pos_pub, String aluno_graduacao_pub, String pesquisador_pub, String mensagem_pub) {
         this.tituloPub = tituloPub;
         this.conferenciaPub = conferenciaPub;
@@ -279,17 +344,17 @@ public class RecursosControlador implements Serializable {
         Professor prof2 = new Professor("PUC-RIO", "101", "Prof.Arnaldo", "arnaldo@email.br");
         Professor prof3 = new Professor("PUC-Rio", "102", "Prof.Paulo", "paulo@email.br");
 
-        Graduacao grad1 = new Graduacao("01/03/2006", prof1, "1001", "Maria", "maria@email.br");
-        Graduacao grad2 = new Graduacao("01/03/2005", prof2, "1002", "João", "joao@email.br");
-        Graduacao grad3 = new Graduacao("01/03/2006", prof2, "1003", "Mario", "mario@email.br");
+        Graduacao grad1 = new Graduacao(null, "01/03/2006", "1001", "Maria", "maria@email.br");
+        Graduacao grad2 = new Graduacao(null, "01/03/2005", "1002", "João", "joao@email.br");
+        Graduacao grad3 = new Graduacao(null, "01/03/2006", "1003", "Mario", "mario@email.br");
 
-        Posgraduacao posg1 = new Posgraduacao("Parcial", prof1, "01/03/2006", true, "1004", "Soraia", "soraia@email.br");
-        Posgraduacao posg2 = new Posgraduacao("Parcial", prof3, "01/06/2007", true, "1005", "Rafael", "rafael@email.br");
-        Posgraduacao posg3 = new Posgraduacao("Integral", prof3, "01/06/2007", true, "1006", "Marta", "marta@email.br");
-        Posgraduacao posg4 = new Posgraduacao("Integral", prof3, "01/03/2006", true, "1007", "Daniel", "Daniel@email.br");
+        Posgraduacao posg1 = new Posgraduacao("Parcial", true, null, "01/03/2006", "1004", "Soraia", "soraia@email.br");
+        Posgraduacao posg2 = new Posgraduacao("Parcial", true, null, "01/06/2007", "1005", "Rafael", "rafael@email.br");
+        Posgraduacao posg3 = new Posgraduacao("Integral", true, null, "01/06/2007", "1006", "Marta", "marta@email.br");
+        Posgraduacao posg4 = new Posgraduacao("Integral", true, null, "01/03/2006", "1007", "Daniel", "Daniel@email.br");
 
-        Posgraduacao posg5 = new Posgraduacao("Integral", prof1, "01/03/2005", false, "1008", "Michael", "Michael@email.br");
-        Posgraduacao posg6 = new Posgraduacao("Integral", prof1, "01/06/2004", false, "1009", "Bia", "Bia@email.br");
+        Posgraduacao posg5 = new Posgraduacao("Integral", false, null, "01/03/2005", "1008", "Michael", "Michael@email.br");
+        Posgraduacao posg6 = new Posgraduacao("Integral", false, null, "01/06/2004", "1009", "Bia", "Bia@email.br");
 
         Pesquisador pesquisador1 = new Pesquisador("PUC-RIO", "1001", "Thiago", "thiago@email.br");
 
@@ -421,12 +486,56 @@ public class RecursosControlador implements Serializable {
                 id_pub += 1;
                 publicacoes.add(newpublicacao);
                 mensagem_pub = "A publicacao foi criada com sucesso";
-            }
-            else{
+            } else {
                 mensagem_pub = "A publicacao só pode ser feita se o projeto estiver com status Em Andamento";
             }
         }
+    }
 
+    public void criarOrientacaoGrad() {
+
+        int posProf = procurarProfessor(professor_diss);
+        int posGrad = procurarGraduacao(alunograd_diss);
+        mensagem_diss = "";
+
+        if (alunograd_diss.equals("null")) {
+            mensagem_diss = "Por favor selecione o aluno de graduacao que sera orientado pelo " + professor_diss;
+            System.out.println("Por favor selecione o aluno de graduacao que sera orientado pelo " + professor_diss);
+        } else {
+            if (alunos_graduacao.get(posGrad).getOrientacao() == null) {
+                Orientacao orientacao = new Orientacao(id_diss, professores.get(posProf), alunos_graduacao.get(posGrad), null, dissertacao);
+                professores.get(posProf).addOrientacao(orientacao);
+                alunos_graduacao.get(posGrad).setOrientacao(orientacao);
+                orientacoes.add(orientacao);
+                id_diss += 1;
+            } else {
+                mensagem_diss = "O aluno de graduacao " + alunograd_diss + " já é orientado pelo " + alunos_graduacao.get(posGrad).getOrientacao().getProfesor().getNome();
+                System.out.println("O aluno de graduacao " + alunograd_diss + " já é orientado pelo " + alunos_graduacao.get(posGrad).getOrientacao().getProfesor().getNome());
+            }
+        }
+    }
+
+    public void criarOrientacaoPos() {
+
+        int posProf = procurarProfessor(professor_diss);
+        int posPos = procurarPosgraduacao(alunopos_diss);
+        mensagem_diss = "";
+
+        if (alunopos_diss.equals("null")) {
+            mensagem_diss = "Por favor selecione o aluno de posgraduacao que sera orientado pelo " + professor_diss;
+            System.out.println("Por favor selecione o aluno de graduacao que sera orientado pelo " + professor_diss);
+        } else {
+            if (alunos_posgraduacao.get(posPos).getOrientacao() == null) {
+                Orientacao orientacao = new Orientacao(id_diss, professores.get(posProf), null, alunos_posgraduacao.get(posPos), dissertacao);
+                professores.get(posProf).addOrientacao(orientacao);
+                alunos_posgraduacao.get(posPos).setOrientacao(orientacao);
+                orientacoes.add(orientacao);
+                id_diss += 1;
+            } else {
+                mensagem_diss = "O aluno de posgraduacao " + alunopos_diss + " já é orientado pelo " + alunos_posgraduacao.get(posPos).getOrientacao().getProfesor().getNome();
+                System.out.println("O aluno de posgraduacao " + alunopos_diss + " já é orientado pelo " + alunos_posgraduacao.get(posPos).getOrientacao().getProfesor().getNome());
+            }
+        }
     }
 
     public int procurarProjeto(String projeto) {

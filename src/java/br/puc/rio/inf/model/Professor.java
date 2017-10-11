@@ -19,6 +19,7 @@ import javax.faces.bean.SessionScoped;
 public class Professor extends Colaborador {
     
     private String afiliacao;
+    private ArrayList<Orientacao> orientacoes = new ArrayList<>();
 
     public Professor(String afiliacao, String Id, String nome, String email) {
         super(Id, nome, email);
@@ -35,6 +36,18 @@ public class Professor extends Colaborador {
 
     public void setAfiliacao(String afiliacao) {
         this.afiliacao = afiliacao;
+    }
+
+    public ArrayList<Orientacao> getOrientacoes() {
+        return orientacoes;
+    }
+
+    public void setOrientacoes(ArrayList<Orientacao> orientacoes) {
+        this.orientacoes = orientacoes;
+    }
+    
+    public void addOrientacao(Orientacao orientacao){
+        this.orientacoes.add(orientacao);
     }
   
 }

@@ -39,24 +39,55 @@
                 <p:column headerText="Projeto" style="width: 15px">
                     <h:outputText value="#{publicacao.projeto.id}" />
                 </p:column>
-                
+
                 <p:column headerText="Professores" style="width: 70px">
                     <h:outputText value="#{publicacao.profesores}" />
                 </p:column>
-                
+
                 <p:column headerText="Graduacao" style="width: 70px">
                     <h:outputText value="#{publicacao.alunos_graduacao}" />
                 </p:column>
-                
+
                 <p:column headerText="Posgraduacao" style="width: 70px">
                     <h:outputText value="#{publicacao.alunos_posgraduacao}" />
                 </p:column>
-                
+
                 <p:column headerText="Pesquisadores" style="width: 50px">
                     <h:outputText value="#{publicacao.pesquisadores}" />
                 </p:column>
-                
+
             </p:dataTable>
+        </h:form>
+        <br></br>
+            <h:form> 
+            <p:panel>
+                <h:outputText
+                    value="Orientacoes do sistema do Laboratorio" /> 
+            </p:panel>
+            <br></br>
+            <p:dataTable var="orientacao" value="#{recursosControlador.orientacoes}">
+                <p:column headerText="Id" style="width: 5px">
+                    <h:outputText value="#{orientacao.id_orientacao}" />
+                </p:column>
+
+                <p:column headerText="Nome orientacao" style="width: 120px">
+                    <h:outputText value="#{orientacao.dissertacao}" />
+                </p:column>
+
+                <p:column headerText="Aluno graduacao" style="width: 25px">
+                    <h:outputText value="#{orientacao.graduacao.nome}" />
+                </p:column>
+
+                <p:column headerText="Aluno posgraduacao" style="width: 25px">
+                    <h:outputText value="#{orientacao.posgraduacao.nome}" />
+                </p:column>
+
+                <p:column headerText="Professor" style="width: 25px">
+                    <h:outputText value="#{orientacao.profesor.nome}" />
+                </p:column>
+
+            </p:dataTable>
+            
         </h:form>
         <br></br><br></br> 
         <h:form>
@@ -79,11 +110,11 @@
                         <f:selectItem itemLabel="Projetos" itemValue="null" noSelectionOption="true"/>
                         <f:selectItems value="#{recursosControlador.projetos}" var="projetos" itemLabel="#{projetos.id}" itemValue="#{projetos.id}"/>
                     </p:selectOneMenu>
-                    
+
                     <h:outputText value=""/>
 
                     <p:commandButton value="Criar" style="width: 200px" update="display1" actionListener="#{recursosControlador.criarPublicacao()}" oncomplete="PF('dlg1').show()" icon="ui-icon-check" />
-                    
+
                     <p:dialog header="Colaboradores alocados no projeto" modal="true" showEffect="bounce" widgetVar="dlg1" resizable="false">   
                         <h:outputText id="display1" value="#{recursosControlador.mensagem_pub}"/>
                     </p:dialog>
@@ -96,13 +127,13 @@
             <p:fieldset legend="Autores" toggleable="true" toggleSpeed="500"  collapsed="true">
                 <p:ajax event="toggle" listener="#{fieldsetView.handleToggle}" update="msgs" />
                 <h:panelGrid columns="8" cellpadding="5">
-                    
+
                     <p:outputLabel for="publicacao" value="Publicacao: "/>
                     <p:selectOneMenu id="publicacao" required="true" value="#{recursosControlador.publicacao}" style="width: 150px">
                         <f:selectItem itemLabel="Publicacao" itemValue="null" noSelectionOption="true"/>
                         <f:selectItems value="#{recursosControlador.publicacoes}" var="publicacao" itemLabel="#{publicacao.id}" itemValue="#{publicacao.id}"/>
                     </p:selectOneMenu>
-                    
+
                     <p:outputLabel for="professores" value="Professores: "/>
                     <p:selectOneMenu id="professores" value="#{recursosControlador.professorPub}" style="width: 150px">
                         <f:selectItem itemLabel="Professores" itemValue="null" noSelectionOption="true"/>
@@ -128,7 +159,7 @@
                     </p:selectOneMenu>
 
                     <h:outputText value=""/>
-                    
+
                     <p:commandButton value="Alocar" style="width:150px" update="display" actionListener="#{recursosControlador.colaboradorPublicacao()}" oncomplete="PF('dlg1').show()" icon="ui-icon-check" />
 
                     <p:dialog header="Autores da publicacao" modal="true" showEffect="bounce" widgetVar="dlg1" resizable="false">   
@@ -137,11 +168,62 @@
 
                 </h:panelGrid>
             </p:fieldset>
-            <br></br> 
-            <p:fieldset legend="Orientacoes" toggleable="true" toggleSpeed="500" collapsed="true">
+        </h:form>
+        <br></br> 
+        <h:form>
+            <p:growl id="msgs" showDetail="true" />
 
+            <p:fieldset legend="Dados orientacao" toggleable="true" toggleSpeed="500" collapsed="true">
+                <p:ajax event="toggle" listener="#{fieldsetView.handleToggle}" update="msgs" />
+                <h:panelGrid columns="4" cellpadding="10" cellspacing="10">
+                    <p:outputLabel for="dissertacao" value="Nome dissertacao: " />
+                    <p:inputText id="dissertacao" required="true" style="width: 400px" value="#{recursosControlador.dissertacao}"/>
+
+                    <p:outputLabel for="professor" value="Professor: "/>
+                    <p:selectOneMenu id="professor" required="true" value="#{recursosControlador.professor_diss}" style="width: 200px">
+                        <f:selectItem itemLabel="Professores" itemValue="null" noSelectionOption="true"/>
+                        <f:selectItems value="#{recursosControlador.professores}" var="professor" itemLabel="#{professor.nome}" itemValue="#{professor.nome}"/>
+                    </p:selectOneMenu>
+                </h:panelGrid>
+                <br></br>
+                <p:tabView>
+                    <p:tab title="Alunos graduacao">
+                        <h:panelGrid columns="3" cellpadding="20">
+                            <p:outputLabel for="alunograd" value="Aluno graduacao: "/>
+                            <p:selectOneMenu id="alunograd" value="#{recursosControlador.alunograd_diss}" style="width: 200px">
+                                <f:selectItem itemLabel="Alunos graduacao" itemValue="null" noSelectionOption="true"/>
+                                <f:selectItems value="#{recursosControlador.alunos_graduacao}" var="alunograd" itemLabel="#{alunograd.nome}" itemValue="#{alunograd.nome}"/>
+                            </p:selectOneMenu>
+
+                            <p:commandButton value="Criar" style="width: 140px" update="display" actionListener="#{recursosControlador.criarOrientacaoGrad()}" oncomplete="PF('dlg1').show()" icon="ui-icon-check" />
+
+                            <p:dialog header="Dados orientacao" modal="true" showEffect="bounce" widgetVar="dlg1" resizable="false">   
+                                <h:outputText id="display" value="#{recursosControlador.mensagem_diss}"/>
+                            </p:dialog>
+                        </h:panelGrid>
+                    </p:tab>
+
+                    <p:tab title="Alunos posgraduacao">
+                        <h:panelGrid columns="3" cellpadding="20">
+                            <p:outputLabel for="alunopos" value="Aluno posgraduacao: "/>
+                            <p:selectOneMenu id="alunopos" value="#{recursosControlador.alunopos_diss}" style="width: 200px">
+                                <f:selectItem itemLabel="Alunos posgraduacao" itemValue="null" noSelectionOption="true"/>
+                                <f:selectItems value="#{recursosControlador.alunos_posgraduacao}" var="alunopos" itemLabel="#{alunopos.nome}" itemValue="#{alunopos.nome}"/>
+                            </p:selectOneMenu>
+
+                            <p:commandButton value="Criar" style="width: 140px" update="display1" actionListener="#{recursosControlador.criarOrientacaoPos()}" oncomplete="PF('dlg1').show()" icon="ui-icon-check" />
+
+                            <p:dialog header="Dados orientacao" modal="true" showEffect="bounce" widgetVar="dlg1" resizable="false">   
+                                <h:outputText id="display1" value="#{recursosControlador.mensagem_diss}"/>
+                            </p:dialog>
+
+                        </h:panelGrid>
+                    </p:tab>
+
+                </p:tabView>
             </p:fieldset>
         </h:form>
+        <br></br>
     </h:body>
 </html>
 

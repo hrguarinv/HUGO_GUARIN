@@ -17,6 +17,7 @@
             <p:menubar>
                 <f:facet name="options">
                     <p:commandButton value="Home" icon="ui-icon-extlink" action="home" style="margin-right:20px"/>
+                    <p:commandButton value="Refresh" icon="fa fa-refresh" update="@form" style="margin-right:20px"/>
                     <p:commandButton value="Logout" icon="ui-icon-extlink" action="#{usuarioLoginView.logout()}" style="margin-right:10px"/>
                 </f:facet>
             </p:menubar>
@@ -61,8 +62,8 @@
                 <p:ajax event="toggle" listener="#{fieldsetView.handleToggle}" update="msgs" />
                 <h:panelGrid columns="6" cellpadding="5">
                     <p:outputLabel for="projetos" value="Projetos: "/>
-                    <p:selectOneMenu id="projetos" required="true" value="#{recursosControlador.projeto}" style="width: 150px">
-                        <f:selectItem itemLabel="Projetos" itemValue="" noSelectionOption="true"/>
+                    <p:selectOneMenu id="projetos" value="#{recursosControlador.projeto}" style="width: 150px">
+                        <f:selectItem itemLabel="Projetos" itemValue="null" noSelectionOption="true"/>
                         <f:selectItems value="#{recursosControlador.projetos}" var="projetos" itemLabel="#{projetos.id}" itemValue="#{projetos.id}"/>
                     </p:selectOneMenu>
 
@@ -91,7 +92,7 @@
                     </p:selectOneMenu>
 
                     <h:outputText value=""/>
-                    
+
                     <p:commandButton value="Alocar" style="width: 150px" update="display1" actionListener="#{recursosControlador.alocarColaboradores()}" oncomplete="PF('dlg1').show()" icon="ui-icon-check" />
 
 

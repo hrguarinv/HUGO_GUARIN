@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Projetos</title>
+        <style type="text/css">
+            .ui-widget{
+                font-size: 90%;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <i id="customheader" class="projetos" style="display:none"></i>
+        <p:dataTable var="projetos" value="#{recursosControlador.projetos}">
+            <p:column headerText="Id" style="width: 10px">
+                <h:outputText value="#{projetos.id}" />
+            </p:column>
+ 
+            <p:column headerText="Titulo" style="width: 40px">
+                <h:outputText value="#{projetos.titulo}" />
+            </p:column>
+ 
+            <p:column headerText="Status" style="width: 20px">
+                <h:outputText value="#{projetos.status}" />
+            </p:column>
+ 
+            <p:column headerText="Agencia" style="width: 10px">
+                <h:outputText value="#{projetos.agenciaFinanciadora}" />
+            </p:column>
+            
+            <p:column headerText="Data inicio" style="width: 10px">
+                <h:outputText value="#{projetos.dataInicio}" />
+            </p:column>
+            
+            <p:column headerText="Data termino" style="width: 10px">
+                <h:outputText value="#{projetos.dataTermino}" />
+            </p:column>
+            
+            <p:column headerText="Alunos graduacao" style="width: 30px">
+                <h:outputText value="#{projetos.alunos_graduacao}" />
+            </p:column>
+            
+            <p:column headerText="Alunos_posgraduacao" style="width: 10px">
+                <h:outputText value="#{projetos.alunos_pos}" />
+            </p:column>
+            
+            <p:column headerText="Professores" style="width: 10px">
+                <h:outputText value="#{projetos.profesores}" />
+            </p:column>
+            
+            <p:column headerText="Pesquisadores" style="width: 10px">
+                <h:outputText value="#{projetos.pesquisadores}" />
+            </p:column>
+            
+            <p:column headerText="Publicacoes" style="width: 10px">
+                <h:outputText value="#{projetos.publicacoes}" />
+            </p:column>
+            
+        </p:dataTable>
+    </h:body>
+</html>
+

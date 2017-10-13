@@ -14,6 +14,7 @@
             <p:menubar>
                 <f:facet name="options">
                     <p:commandButton value="Home" icon="ui-icon-extlink" action="home" style="margin-right:20px"/>
+                    <p:commandButton value="Refresh" icon="fa fa-refresh" update="@form" style="margin-right:20px"/>
                     <p:commandButton value="Logout" icon="ui-icon-extlink" action="#{usuarioLoginView.logout()}" style="margin-right:10px"/>
                 </f:facet>
             </p:menubar>
@@ -57,9 +58,9 @@
                 </p:column>
 
             </p:dataTable>
-        </h:form>
+        
         <br></br>
-            <h:form> 
+        
             <p:panel>
                 <h:outputText
                     value="Orientacoes do sistema do Laboratorio" /> 
@@ -87,7 +88,7 @@
                 </p:column>
 
             </p:dataTable>
-            
+
         </h:form>
         <br></br><br></br> 
         <h:form>
@@ -97,13 +98,13 @@
                 <h:panelGrid columns="8" cellpadding="5">
 
                     <p:outputLabel for="titulo" value="Titulo: " />
-                    <p:inputText id="titulo" required="true" value="#{recursosControlador.tituloPub}"/>
+                    <p:inputText id="titulo" value="#{recursosControlador.tituloPub}"/>
 
                     <p:outputLabel for="conferencia" value="Conferencia: " />
-                    <p:inputText id="conferencia" required="true" value="#{recursosControlador.conferenciaPub}"/>
+                    <p:inputText id="conferencia" value="#{recursosControlador.conferenciaPub}"/>
 
                     <p:outputLabel for="ano" value="Ano: " />
-                    <p:inputText id="ano" required="true" value="#{recursosControlador.anoPub}"/>
+                    <p:inputText id="ano" value="#{recursosControlador.anoPub}"/>
 
                     <p:outputLabel for="projetos" value="Projetos: "/>
                     <p:selectOneMenu id="projetos" value="#{recursosControlador.projetoPub}" style="width: 200px">
@@ -113,10 +114,10 @@
 
                     <h:outputText value=""/>
 
-                    <p:commandButton value="Criar" style="width: 200px" update="display1" actionListener="#{recursosControlador.criarPublicacao()}" oncomplete="PF('dlg1').show()" icon="ui-icon-check" />
+                    <p:commandButton value="Criar" update="display" actionListener="#{recursosControlador.criarPublicacao()}" oncomplete="PF('dlg1').show()" icon="ui-icon-check" />
 
                     <p:dialog header="Colaboradores alocados no projeto" modal="true" showEffect="bounce" widgetVar="dlg1" resizable="false">   
-                        <h:outputText id="display1" value="#{recursosControlador.mensagem_pub}"/>
+                        <h:outputText id="display" value="#{recursosControlador.mensagem_pub}"/>
                     </p:dialog>
                 </h:panelGrid>
             </p:fieldset>
@@ -129,7 +130,7 @@
                 <h:panelGrid columns="8" cellpadding="5">
 
                     <p:outputLabel for="publicacao" value="Publicacao: "/>
-                    <p:selectOneMenu id="publicacao" required="true" value="#{recursosControlador.publicacao}" style="width: 150px">
+                    <p:selectOneMenu id="publicacao" value="#{recursosControlador.publicacao}" style="width: 150px">
                         <f:selectItem itemLabel="Publicacao" itemValue="null" noSelectionOption="true"/>
                         <f:selectItems value="#{recursosControlador.publicacoes}" var="publicacao" itemLabel="#{publicacao.id}" itemValue="#{publicacao.id}"/>
                     </p:selectOneMenu>
@@ -160,10 +161,10 @@
 
                     <h:outputText value=""/>
 
-                    <p:commandButton value="Alocar" style="width:150px" update="display" actionListener="#{recursosControlador.colaboradorPublicacao()}" oncomplete="PF('dlg1').show()" icon="ui-icon-check" />
+                    <p:commandButton value="Alocar" style="width:150px" update="display1" actionListener="#{recursosControlador.colaboradorPublicacao()}" oncomplete="PF('dlg2').show()" icon="ui-icon-check" />
 
-                    <p:dialog header="Autores da publicacao" modal="true" showEffect="bounce" widgetVar="dlg1" resizable="false">   
-                        <h:outputText id="display" value="#{recursosControlador.mensagem_pub}"/>
+                    <p:dialog header="Autores da publicacao" modal="true" showEffect="bounce" widgetVar="dlg2" resizable="false">   
+                        <h:outputText id="display1" value="#{recursosControlador.mensagem_pub}"/>
                     </p:dialog>
 
                 </h:panelGrid>
@@ -177,10 +178,10 @@
                 <p:ajax event="toggle" listener="#{fieldsetView.handleToggle}" update="msgs" />
                 <h:panelGrid columns="4" cellpadding="10" cellspacing="10">
                     <p:outputLabel for="dissertacao" value="Nome dissertacao: " />
-                    <p:inputText id="dissertacao" required="true" style="width: 400px" value="#{recursosControlador.dissertacao}"/>
+                    <p:inputText id="dissertacao" style="width: 400px" value="#{recursosControlador.dissertacao}"/>
 
                     <p:outputLabel for="professor" value="Professor: "/>
-                    <p:selectOneMenu id="professor" required="true" value="#{recursosControlador.professor_diss}" style="width: 200px">
+                    <p:selectOneMenu id="professor" value="#{recursosControlador.professor_diss}" style="width: 200px">
                         <f:selectItem itemLabel="Professores" itemValue="null" noSelectionOption="true"/>
                         <f:selectItems value="#{recursosControlador.professores}" var="professor" itemLabel="#{professor.nome}" itemValue="#{professor.nome}"/>
                     </p:selectOneMenu>
@@ -195,10 +196,10 @@
                                 <f:selectItems value="#{recursosControlador.alunos_graduacao}" var="alunograd" itemLabel="#{alunograd.nome}" itemValue="#{alunograd.nome}"/>
                             </p:selectOneMenu>
 
-                            <p:commandButton value="Criar" style="width: 140px" update="display" actionListener="#{recursosControlador.criarOrientacaoGrad()}" oncomplete="PF('dlg1').show()" icon="ui-icon-check" />
+                            <p:commandButton value="Criar" style="width: 140px" update="display2" actionListener="#{recursosControlador.criarOrientacaoGrad()}" oncomplete="PF('dlg3').show()" icon="ui-icon-check" />
 
-                            <p:dialog header="Dados orientacao" modal="true" showEffect="bounce" widgetVar="dlg1" resizable="false">   
-                                <h:outputText id="display" value="#{recursosControlador.mensagem_diss}"/>
+                            <p:dialog header="Dados orientacao" modal="true" showEffect="bounce" widgetVar="dlg3" resizable="false">   
+                                <h:outputText id="display2" value="#{recursosControlador.mensagem_diss}"/>
                             </p:dialog>
                         </h:panelGrid>
                     </p:tab>
@@ -211,10 +212,10 @@
                                 <f:selectItems value="#{recursosControlador.alunos_posgraduacao}" var="alunopos" itemLabel="#{alunopos.nome}" itemValue="#{alunopos.nome}"/>
                             </p:selectOneMenu>
 
-                            <p:commandButton value="Criar" style="width: 140px" update="display1" actionListener="#{recursosControlador.criarOrientacaoPos()}" oncomplete="PF('dlg1').show()" icon="ui-icon-check" />
+                            <p:commandButton value="Criar" style="width: 140px" update="display3" actionListener="#{recursosControlador.criarOrientacaoPos()}" oncomplete="PF('dlg4').show()" icon="ui-icon-check" />
 
-                            <p:dialog header="Dados orientacao" modal="true" showEffect="bounce" widgetVar="dlg1" resizable="false">   
-                                <h:outputText id="display1" value="#{recursosControlador.mensagem_diss}"/>
+                            <p:dialog header="Dados orientacao" modal="true" showEffect="bounce" widgetVar="dlg4" resizable="false">   
+                                <h:outputText id="display3" value="#{recursosControlador.mensagem_diss}"/>
                             </p:dialog>
 
                         </h:panelGrid>

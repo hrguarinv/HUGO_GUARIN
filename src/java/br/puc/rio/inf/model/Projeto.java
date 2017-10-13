@@ -175,4 +175,11 @@ public class Projeto {
     public void addPublicacao(Publicacao publicacao){
         this.publicacoes.add(publicacao);
     }
+
+    @Override
+    public String toString() {
+        return  titulo;
+    }
+    
+    
 }

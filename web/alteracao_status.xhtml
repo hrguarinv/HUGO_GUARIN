@@ -14,6 +14,7 @@
             <p:menubar>
                 <f:facet name="options">
                     <p:commandButton value="Home" icon="ui-icon-extlink" action="home" style="margin-right:20px"/>
+                    <p:commandButton value="Refresh" icon="fa fa-refresh" update="@form" style="margin-right:20px"/>
                     <p:commandButton value="Logout" icon="ui-icon-extlink" action="#{usuarioLoginView.logout()}" style="margin-right:10px"/>
                 </f:facet>
             </p:menubar>
@@ -63,20 +64,19 @@
                 <h:panelGrid id="grid" columns="6" cellpadding="5">
 
                     <p:outputLabel for="projetos" value="Projetos: "/>
-                    <p:selectOneMenu id="projetos" required="true" value="#{recursosControlador.projeto}" style="width: 150px">
-                        <f:selectItem itemLabel="Projetos" itemValue="" noSelectionOption="true"/>
+                    <p:selectOneMenu id="projetos" value="#{recursosControlador.projetoStatus}" style="width: 150px">
+                        <f:selectItem itemLabel="Projetos" itemValue="null" noSelectionOption="true"/>
                         <f:selectItems value="#{recursosControlador.projetos}" var="projetos" itemLabel="#{projetos.id}" itemValue="#{projetos.id}"/>
                     </p:selectOneMenu>
                     <p:outputLabel for="status" value="Status: "/>
-                    <p:selectOneMenu id="status"  required="true" value="#{recursosControlador.opcaoStatus}" style="width: 150px">
+                    <p:selectOneMenu id="status" value="#{recursosControlador.opcaoStatus}" style="width: 150px">
                         <f:selectItem itemLabel="Status" itemValue="null" noSelectionOption="true"/>
-                        <f:selectItem itemValue="Em Elaboracao" itemLabel="Em Elaboracao"/>
                         <f:selectItem itemValue="Em Andamento" itemLabel="Em Andamento"/>
                         <f:selectItem itemValue="Concluido" itemLabel="Concluido"/>
                     </p:selectOneMenu>
-                    
+
                     <h:outputText value=""/>
-                    
+
                     <p:commandButton value="Alterar" update="display" actionListener="#{recursosControlador.alterarStatus()}" oncomplete="PF('dlg1').show()" icon="ui-icon-check" />
 
                     <p:dialog header="Colaboradores alocados no projeto" modal="true" showEffect="bounce" widgetVar="dlg1" resizable="false">   

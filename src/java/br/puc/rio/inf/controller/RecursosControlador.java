@@ -15,7 +15,6 @@ import br.puc.rio.inf.model.Publicacao;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -43,6 +42,7 @@ public class RecursosControlador implements Serializable {
     private String mensagemStatus = null;
     private String opcaoStatus = null;
     private String projeto = null;
+    private String projetoStatus = null;
     private ArrayList<Projeto> projetos = new ArrayList<>();
 
     private int id_pub = 1;
@@ -322,6 +322,14 @@ public class RecursosControlador implements Serializable {
         this.id_diss = id_diss;
     }
 
+    public String getProjetoStatus() {
+        return projetoStatus;
+    }
+
+    public void setProjetoStatus(String projetoStatus) {
+        this.projetoStatus = projetoStatus;
+    }
+
     public RecursosControlador(String tituloPub, String conferenciaPub, String anoPub, String projetoPub, String professorPub, String aluno_pos_pub, String aluno_graduacao_pub, String pesquisador_pub, String mensagem_pub) {
         this.tituloPub = tituloPub;
         this.conferenciaPub = conferenciaPub;
@@ -378,7 +386,7 @@ public class RecursosControlador implements Serializable {
 
         Projeto projeto5 = new Projeto("60", "Self-organizing Multi-agent Systems", "15/07/2008", "02/10/2010", "FPCL", "R$ 150.000",
                 "O objetivo geral deste projeto é desenvolver sistemas multi-agentes auto-organizaveis",
-                "Pesquisar, aplicar e avaliar técnicas para o desenvolvimento de sistemas multi-agentes auto-organizáveis", null);
+                "Pesquisar, aplicar e avaliar técnicas para o desenvolvimento de sistemas multi-agentes auto-organizáveis", "Em Elaboracao");
 
         professores.add(prof1);
         professores.add(prof2);
@@ -474,20 +482,24 @@ public class RecursosControlador implements Serializable {
     public void criarPublicacao() {
         mensagem_pub = "";
         int posProj = procurarProjeto(projetoPub);
-        if (posProj == 50) {
-            Publicacao newpublicacao = new Publicacao(id_pub, tituloPub, conferenciaPub, anoPub, null);
-            id_pub += 1;
-            publicacoes.add(newpublicacao);
-            mensagem_pub = "A publicacao foi criada com sucesso";
+        if (tituloPub.equals("") || conferenciaPub.equals("") || anoPub.equals("")) {
+            mensagem_pub = "Digite o titulo, a conferencia e o ano da publicacao";
         } else {
-            if (projetos.get(posProj).getStatus().equals("Em Andamento")) {
-                Publicacao newpublicacao = new Publicacao(id_pub, tituloPub, conferenciaPub, anoPub, projetos.get(posProj));
-                projetos.get(posProj).addPublicacao(newpublicacao);
+            if (posProj == 50) {
+                Publicacao newpublicacao = new Publicacao(id_pub, tituloPub, conferenciaPub, anoPub, null);
                 id_pub += 1;
                 publicacoes.add(newpublicacao);
                 mensagem_pub = "A publicacao foi criada com sucesso";
             } else {
-                mensagem_pub = "A publicacao só pode ser feita se o projeto estiver com status Em Andamento";
+                if (projetos.get(posProj).getStatus().equals("Em Andamento")) {
+                    Publicacao newpublicacao = new Publicacao(id_pub, tituloPub, conferenciaPub, anoPub, projetos.get(posProj));
+                    projetos.get(posProj).addPublicacao(newpublicacao);
+                    id_pub += 1;
+                    publicacoes.add(newpublicacao);
+                    mensagem_pub = "A publicacao foi criada com sucesso";
+                } else {
+                    mensagem_pub = "A publicacao só pode ser feita se o projeto estiver com status Em Andamento";
+                }
             }
         }
     }
@@ -498,19 +510,22 @@ public class RecursosControlador implements Serializable {
         int posGrad = procurarGraduacao(alunograd_diss);
         mensagem_diss = "";
 
-        if (alunograd_diss.equals("null")) {
-            mensagem_diss = "Por favor selecione o aluno de graduacao que sera orientado pelo " + professor_diss;
-            System.out.println("Por favor selecione o aluno de graduacao que sera orientado pelo " + professor_diss);
+        if (dissertacao == null || dissertacao.equals("") || professor_diss.equals("null")) {
+            mensagem_diss = "Selecione um professor e um titulo para a dissertacao";
         } else {
-            if (alunos_graduacao.get(posGrad).getOrientacao() == null) {
-                Orientacao orientacao = new Orientacao(id_diss, professores.get(posProf), alunos_graduacao.get(posGrad), null, dissertacao);
-                professores.get(posProf).addOrientacao(orientacao);
-                alunos_graduacao.get(posGrad).setOrientacao(orientacao);
-                orientacoes.add(orientacao);
-                id_diss += 1;
+            if (alunograd_diss.equals("null")) {
+                mensagem_diss = "Por favor selecione o aluno de graduacao que sera orientado pelo " + professor_diss;
             } else {
-                mensagem_diss = "O aluno de graduacao " + alunograd_diss + " já é orientado pelo " + alunos_graduacao.get(posGrad).getOrientacao().getProfesor().getNome();
-                System.out.println("O aluno de graduacao " + alunograd_diss + " já é orientado pelo " + alunos_graduacao.get(posGrad).getOrientacao().getProfesor().getNome());
+                if (alunos_graduacao.get(posGrad).getOrientacao() == null) {
+                    Orientacao orientacao = new Orientacao(id_diss, professores.get(posProf), alunos_graduacao.get(posGrad), null, dissertacao);
+                    professores.get(posProf).addOrientacao(orientacao);
+                    alunos_graduacao.get(posGrad).setOrientacao(orientacao);
+                    orientacoes.add(orientacao);
+                    id_diss += 1;
+                    mensagem_diss = alunograd_diss;
+                } else {
+                    mensagem_diss = "O aluno de graduacao " + alunograd_diss + " já é orientado pelo " + alunos_graduacao.get(posGrad).getOrientacao().getProfesor().getNome();
+                }
             }
         }
     }
@@ -521,19 +536,22 @@ public class RecursosControlador implements Serializable {
         int posPos = procurarPosgraduacao(alunopos_diss);
         mensagem_diss = "";
 
-        if (alunopos_diss.equals("null")) {
-            mensagem_diss = "Por favor selecione o aluno de posgraduacao que sera orientado pelo " + professor_diss;
-            System.out.println("Por favor selecione o aluno de graduacao que sera orientado pelo " + professor_diss);
+        if (dissertacao == null || dissertacao.equals("") || professor_diss.equals("null")) {
+            mensagem_diss = "Selecione um professor e um titulo para a dissertacao";
         } else {
-            if (alunos_posgraduacao.get(posPos).getOrientacao() == null) {
-                Orientacao orientacao = new Orientacao(id_diss, professores.get(posProf), null, alunos_posgraduacao.get(posPos), dissertacao);
-                professores.get(posProf).addOrientacao(orientacao);
-                alunos_posgraduacao.get(posPos).setOrientacao(orientacao);
-                orientacoes.add(orientacao);
-                id_diss += 1;
+            if (alunopos_diss.equals("null")) {
+                mensagem_diss = "Por favor selecione o aluno de posgraduacao que sera orientado pelo " + professor_diss;
             } else {
-                mensagem_diss = "O aluno de posgraduacao " + alunopos_diss + " já é orientado pelo " + alunos_posgraduacao.get(posPos).getOrientacao().getProfesor().getNome();
-                System.out.println("O aluno de posgraduacao " + alunopos_diss + " já é orientado pelo " + alunos_posgraduacao.get(posPos).getOrientacao().getProfesor().getNome());
+                if (alunos_posgraduacao.get(posPos).getOrientacao() == null) {
+                    Orientacao orientacao = new Orientacao(id_diss, professores.get(posProf), null, alunos_posgraduacao.get(posPos), dissertacao);
+                    professores.get(posProf).addOrientacao(orientacao);
+                    alunos_posgraduacao.get(posPos).setOrientacao(orientacao);
+                    orientacoes.add(orientacao);
+                    id_diss += 1;
+                    mensagem_diss = alunopos_diss;
+                } else {
+                    mensagem_diss = "O aluno de posgraduacao " + alunopos_diss + " já é orientado pelo " + alunos_posgraduacao.get(posPos).getOrientacao().getProfesor().getNome();
+                }
             }
         }
     }
@@ -680,20 +698,12 @@ public class RecursosControlador implements Serializable {
 
     //Verifica que o projete esteja em Andamento para poder alocar colaboradores
     public boolean verificarAlocacao1() {
-        boolean flag = false;
-        FacesMessage message = null;
         for (int x = 0; x < projetos.size(); x++) {
             if ((projetos.get(x).getId().equals(projeto)) && (projetos.get(x).getStatus().equals("Em Elaboracao"))) {
-                message = new FacesMessage(FacesMessage.FACES_MESSAGES, "O projeto pode alocar participantes");
-                flag = true;
+                return true;
             }
         }
-        if (flag == false) {
-            message = new FacesMessage(FacesMessage.FACES_MESSAGES, "O projeto nao pode alocar parctipantes. Verificar o status");
-            return false;
-        } else {
-            return true;
-        }
+        return false;
     }
 
     // Verifica que o um aluno de graduacao somente esteja no maximo dois projetos
@@ -722,7 +732,7 @@ public class RecursosControlador implements Serializable {
         int posPes = procurarPesquisador(pesquisador);
 
         if (verificarAlocacao1() == false) {
-            if (projeto.equals("")) {
+            if (projeto.equals("null")) {
                 mensagem = "Selecione um projeto\n";
             } else {
                 mensagem = " [O projeto nao tem o status certo para alocar colaboradores] ";
@@ -778,10 +788,13 @@ public class RecursosControlador implements Serializable {
                 mensagem += " [O aluno da graduacao faz parte de dois projetos] ";
             }
         }
+        if (mensagem.equals("")) {
+            mensagem = "Selecione algum colaborador";
+        }
     }
 
     public boolean verificarInformacoes() {
-        int posProj = procurarProjeto(projeto);
+        int posProj = procurarProjeto(projetoStatus);
         if (projetos.get(posProj).getAgenciaFinanciadora() != null && projetos.get(posProj).getDataInicio() != null && projetos.get(posProj).getDataTermino() != null
                 && projetos.get(posProj).getDescricao() != null && projetos.get(posProj).getObjetivo() != null
                 && projetos.get(posProj).getTitulo() != null && projetos.get(posProj).getValor() != null) {
@@ -792,7 +805,7 @@ public class RecursosControlador implements Serializable {
     }
 
     public boolean verificarPublicacoes() {
-        int posProj = procurarProjeto(projeto);
+        int posProj = procurarProjeto(projetoStatus);
         if (projetos.get(posProj).getPublicacoes().size() > 0) {
             return true;
         } else {
@@ -802,31 +815,36 @@ public class RecursosControlador implements Serializable {
 
     public void alterarStatus() {
         mensagemStatus = "";
-        int posProj = procurarProjeto(projeto);
-        if (opcaoStatus.equals("null")) {
-            mensagemStatus = "Selecione uma opcao para alterar o status do projeto";
+        int posProj = procurarProjeto(projetoStatus);
+        if (opcaoStatus.equals("null") || projetoStatus.equals("null")) {
+            mensagemStatus = "Selecione um projeto e um status para alterar o status do projeto";
         } else {
-            if (opcaoStatus.equals("Em Andamento")) {
-                if (verificarInformacoes() == true && projetos.get(posProj).getStatus().equals("Em Elaboracao")) {
-                    projetos.get(posProj).setStatus("Em Andamento");
-                    mensagemStatus = "O status do projeto foi alterado para Em Andamento";
-                } else {
-                    if (projetos.get(posProj).getStatus() != null) {
-                        mensagemStatus = "Nao é possivel alterar o status do projeto porque ele já está Em Andamento";
+            if (projetos.get(posProj).getStatus().equals("Concluido")) {
+                mensagemStatus = "Nao é possivel mudar o status do projeto porque o status atual é concluido";
+            } else {
+                if (opcaoStatus.equals("Em Andamento")) {
+                    if (verificarInformacoes() == true && projetos.get(posProj).getStatus().equals("Em Elaboracao")) {
+                        projetos.get(posProj).setStatus("Em Andamento");
+                        mensagemStatus = "O status do projeto foi alterado para Em Andamento";
                     } else {
-                        mensagemStatus = "Nao é possivel alterar o status por falta das informacaoes do projeto";
+                        if (projetos.get(posProj).getStatus() != null) {
+                            mensagemStatus = "Nao é possivel alterar o status do projeto porque ele já está Em Andamento";
+                        } else {
+                            mensagemStatus = "Nao é possivel alterar o status por falta das informacaoes do projeto";
+                        }
                     }
-                }
-            }
-            if (opcaoStatus.equals("Concluido")) {
-                if (verificarPublicacoes() == true && projetos.get(posProj).getStatus().equals("Em Andamento")) {
-                    projetos.get(posProj).setStatus("Concluido");
-                    mensagemStatus = "O status do projeto foi alterado para Concluido";
                 } else {
-                    if (verificarPublicacoes() == false) {
-                        mensagemStatus = "Nao é possivel alterar o status do projeto porque ele nao tem publicacoes asociadas";
-                    } else {
-                        mensagemStatus = "Nao é possivel Concluir o projeto sem o projeto estar Em Andamento";
+                    if (opcaoStatus.equals("Concluido")) {
+                        if (verificarPublicacoes() == true && projetos.get(posProj).getStatus().equals("Em Andamento")) {
+                            projetos.get(posProj).setStatus("Concluido");
+                            mensagemStatus = "O status do projeto foi alterado para Concluido";
+                        } else {
+                            if (verificarPublicacoes() == false) {
+                                mensagemStatus = "Nao é possivel alterar o status do projeto porque ele nao tem publicacoes asociadas";
+                            } else {
+                                mensagemStatus = "Nao é possivel Concluir o projeto sem o projeto estar Em Andamento";
+                            }
+                        }
                     }
                 }
             }
@@ -840,48 +858,95 @@ public class RecursosControlador implements Serializable {
         int posPes = procurarPesquisador(pesquisador_pub);
         int posPub = procurarPublicaco(id_pub);
         mensagem_pub = "";
-        if (professorPub.equals("null") && aluno_graduacao_pub.equals("null") && aluno_pos_pub.equals("null") && pesquisador_pub.equals("null")) {
-            mensagem_pub = "Selecione um colaborador que será o autor da publicacao";
+        if (publicacoes.isEmpty()) {
+            mensagem_pub = "Crie uma publicacao";
         } else {
-            if (!"null".equals(professorPub) && professorRepetido_pub(posProf) == false) {
-                professores.get(posProf).addPublicacao(publicacoes.get(posPub));
-                publicacoes.get(posPub).addProfesor(professores.get(posProf));
-                mensagem_pub = " [" + professorPub + "] ";
+            if (publicacao.equals("null")) {
+                mensagem_pub = "Selecione uma publicacao";
             } else {
-                if (!"null".equals(professorPub)) {
-                    mensagem_pub = "O professor já é um autor da publicacao - ";
+                if (professorPub.equals("null") && aluno_graduacao_pub.equals("null") && aluno_pos_pub.equals("null") && pesquisador_pub.equals("null")) {
+                    mensagem_pub = "Selecione um colaborador que será o autor da publicacao";
+                } else {
+                    if (!"null".equals(professorPub) && professorRepetido_pub(posProf) == false) {
+                        professores.get(posProf).addPublicacao(publicacoes.get(posPub));
+                        publicacoes.get(posPub).addProfesor(professores.get(posProf));
+                        mensagem_pub = " [" + professorPub + "] ";
+                    } else {
+                        if (!"null".equals(professorPub)) {
+                            mensagem_pub = "O professor já é um autor da publicacao - ";
+                        }
+                    }
+                    if (!"null".equals(aluno_graduacao_pub) && aluno_grad_Repetido_pub(posgrad) == false) {
+                        alunos_graduacao.get(posgrad).addPublicacao(publicacoes.get(posPub));
+                        publicacoes.get(posPub).addGraduacao(alunos_graduacao.get(posgrad));
+                        mensagem_pub += " [" + aluno_graduacao_pub + "] ";
+                    } else {
+                        if (!"null".equals(aluno_graduacao_pub)) {
+                            mensagem_pub += "O aluno de graduacao já é um autor da publicacao - ";
+                        }
+                    }
+                    if (!"null".equals(aluno_pos_pub) && aluno_pos_Repetido_pub(posPos) == false) {
+                        alunos_posgraduacao.get(posPos).addPublicacao(publicacoes.get(posPub));
+                        publicacoes.get(posPub).addPosgraduacao(alunos_posgraduacao.get(posPos));
+                        mensagem_pub += " [" + aluno_pos_pub + "] ";
+                    } else {
+                        if (!"null".equals(aluno_pos_pub)) {
+                            mensagem_pub += "O aluno de posgraduacao já é um autor da publicacao - ";
+                        }
+                    }
+                    if (!"null".equals(pesquisador_pub) && pesquisador_Repetido_pub(posPes) == false) {
+                        pesquisadores.get(posPes).addPublicacao(publicacoes.get(posPub));
+                        publicacoes.get(posPub).addPesquisador(pesquisadores.get(posPes));
+                        mensagem_pub += " [" + pesquisador_pub + "] ";
+                    } else {
+                        if (!"null".equals(pesquisador_pub)) {
+                            mensagem_pub += " O pesquisador já é um autor da publicacao";
+                        }
+                    }
                 }
             }
-            if (!"null".equals(aluno_graduacao_pub) && aluno_grad_Repetido_pub(posgrad) == false) {
-                alunos_graduacao.get(posgrad).addPublicacao(publicacoes.get(posPub));
-                publicacoes.get(posPub).addGraduacao(alunos_graduacao.get(posgrad));
-                mensagem_pub += " [" + aluno_graduacao_pub + "] ";
-            } else {
-                if (!"null".equals(aluno_graduacao_pub)) {
-                    mensagem_pub += "O aluno de graduacao já é um autor da publicacao - ";
-                }
-            }
-            if (!"null".equals(aluno_pos_pub) && aluno_pos_Repetido_pub(posPos) == false) {
-                alunos_posgraduacao.get(posPos).addPublicacao(publicacoes.get(posPub));
-                publicacoes.get(posPub).addPosgraduacao(alunos_posgraduacao.get(posPos));
-                mensagem_pub += " [" + aluno_pos_pub + "] ";
-            } else {
-                if (!"null".equals(aluno_pos_pub)) {
-                    mensagem_pub += "O aluno de posgraduacao já é um autor da publicacao - ";
-                }
-            }
-            if (!"null".equals(pesquisador_pub) && pesquisador_Repetido_pub(posPes) == false) {
-                pesquisadores.get(posPes).addPublicacao(publicacoes.get(posPub));
-                publicacoes.get(posPub).addPesquisador(pesquisadores.get(posPes));
-                mensagem_pub += " [" + pesquisador_pub + "] ";
-            } else {
-                if (!"null".equals(pesquisador_pub)) {
-                    mensagem_pub += " O pesquisador já é um autor da publicacao";
-                }
+        }
+    }
 
+    public int numColaboradores() {
+        int profs = professores.size();
+        int grad = alunos_graduacao.size();
+        int pos = alunos_posgraduacao.size();
+        int pes = pesquisadores.size();
+
+        return profs + grad + pos + pes;
+    }
+
+    public int numProjetosElab() {
+        int cont = 0;
+        for (int x = 0; x < projetos.size(); x++) {
+            if (projetos.get(x).getStatus().equals("Em Elaboracao")) {
+                cont += 1;
             }
 
         }
+        return cont;
+    }
+
+    public int numProjetosAnd() {
+        int cont = 0;
+        for (int x = 0; x < projetos.size(); x++) {
+            if (projetos.get(x).getStatus().equals("Em Andamento")) {
+                cont += 1;
+            }
+        }
+        return cont;
+    }
+
+    public int numProjetosConc() {
+        int cont = 0;
+        for (int x = 0; x < projetos.size(); x++) {
+            if (projetos.get(x).getStatus().equals("Concluido")) {
+                cont += 1;
+            }
+
+        }
+        return cont;
     }
 
     public void apresentarColaboradores() {

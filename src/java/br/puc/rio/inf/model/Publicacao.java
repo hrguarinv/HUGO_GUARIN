@@ -15,7 +15,7 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean
 @SessionScoped
-public class Publicacao {
+public class Publicacao implements Comparable<Publicacao>{
 
     private int id;
     private String titulo;
@@ -126,6 +126,11 @@ public class Publicacao {
     @Override
     public String toString() {
         return titulo;
+    }
+
+    @Override
+    public int compareTo(Publicacao p) {
+        return ano.compareTo(p.getAno());
     }
     
     

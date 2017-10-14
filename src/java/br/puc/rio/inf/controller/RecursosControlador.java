@@ -14,6 +14,7 @@ import br.puc.rio.inf.model.Projeto;
 import br.puc.rio.inf.model.Publicacao;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -65,7 +66,7 @@ public class RecursosControlador implements Serializable {
     private String alunograd_diss = null;
     private String mensagem_diss = null;
     private ArrayList<Orientacao> orientacoes = new ArrayList<>();
-
+    
     public String getAluno_graduacao() {
         return aluno_graduacao;
     }
@@ -613,8 +614,7 @@ public class RecursosControlador implements Serializable {
         int pos = 0;
         for (int z = 0; z < publicacoes.size(); z++) {
             if (publicacoes.get(z).getId() == id_pub) {
-                pos = z;
-                return pos;
+                return z;
             }
         }
         return pos;
@@ -711,7 +711,7 @@ public class RecursosControlador implements Serializable {
         int cont = 0;
         for (int y = 0; y < projetos.size(); y++) {
             for (int z = 0; z < projetos.get(y).getAlunos_graduacao().size(); z++) {
-                if (projetos.get(y).getAlunos_graduacao().get(z).getNome().equals(aluno_graduacao)) {
+                if (projetos.get(y).getAlunos_graduacao().get(z).getNome().equals(aluno_graduacao) && projetos.get(y).getStatus().equals("Em Andamento")) {
                     cont++;
                 }
             }
@@ -852,11 +852,6 @@ public class RecursosControlador implements Serializable {
     }
 
     public void colaboradorPublicacao() {
-        int posProf = procurarProfessor(professorPub);
-        int posPos = procurarPosgraduacao(aluno_pos_pub);
-        int posgrad = procurarGraduacao(aluno_graduacao_pub);
-        int posPes = procurarPesquisador(pesquisador_pub);
-        int posPub = procurarPublicaco(id_pub);
         mensagem_pub = "";
         if (publicacoes.isEmpty()) {
             mensagem_pub = "Crie uma publicacao";
@@ -864,9 +859,15 @@ public class RecursosControlador implements Serializable {
             if (publicacao.equals("null")) {
                 mensagem_pub = "Selecione uma publicacao";
             } else {
+                int pub = Integer.parseInt(publicacao);
+                int posPub = procurarPublicaco(pub);
                 if (professorPub.equals("null") && aluno_graduacao_pub.equals("null") && aluno_pos_pub.equals("null") && pesquisador_pub.equals("null")) {
                     mensagem_pub = "Selecione um colaborador que será o autor da publicacao";
                 } else {
+                    int posProf = procurarProfessor(professorPub);
+                    int posPos = procurarPosgraduacao(aluno_pos_pub);
+                    int posgrad = procurarGraduacao(aluno_graduacao_pub);
+                    int posPes = procurarPesquisador(pesquisador_pub);
                     if (!"null".equals(professorPub) && professorRepetido_pub(posProf) == false) {
                         professores.get(posProf).addPublicacao(publicacoes.get(posPub));
                         publicacoes.get(posPub).addProfesor(professores.get(posProf));
@@ -947,6 +948,12 @@ public class RecursosControlador implements Serializable {
 
         }
         return cont;
+    }
+
+    public void ordenarPublicacoes() {
+        for (int x = 0; x < professores.size(); x++) {
+            Collections.sort(professores.get(x).getPublicacoes());
+        }
     }
 
     public void apresentarColaboradores() {

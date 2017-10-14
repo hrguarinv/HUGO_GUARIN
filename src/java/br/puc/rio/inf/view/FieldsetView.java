@@ -5,6 +5,7 @@
  */
 package br.puc.rio.inf.view;
 
+import br.puc.rio.inf.controller.RecursosControlador;
 import java.util.HashMap;
 import java.util.Map;
 import javax.faces.application.FacesMessage;
@@ -38,6 +39,8 @@ public class FieldsetView {
     }
     
     public void verProfessores() {
+        RecursosControlador rc = new RecursosControlador();
+        rc.ordenarPublicacoes();
         Map<String, Object> options = new HashMap<>();
         options.put("resizable", false);
         RequestContext.getCurrentInstance().openDialog("ver_professores", options, null);

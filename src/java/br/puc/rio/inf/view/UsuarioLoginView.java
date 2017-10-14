@@ -25,7 +25,7 @@ public class UsuarioLoginView implements Serializable {
     private String password;
 
     private boolean logeado = false;
-
+    
     public String getUsername() {
         return username;
     }
@@ -68,7 +68,7 @@ public class UsuarioLoginView implements Serializable {
             FacesContext.getCurrentInstance().addMessage(
                     null,
                     new FacesMessage(FacesMessage.SEVERITY_WARN,
-                            "Usuario ou senha errada",
+                            "Usuário ou senha inválidos",
                             "Selecione as credenciais certas"));
             return "index";
         }

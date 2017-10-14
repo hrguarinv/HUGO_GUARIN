@@ -14,7 +14,7 @@
             <p:menubar>
                 <f:facet name="options">
                     <p:commandButton value="Home" icon="ui-icon-extlink" action="home" style="margin-right:20px"/>
-                    <p:commandButton value="Refresh" icon="fa fa-refresh" update="@form" style="margin-right:20px"/>
+                    <p:commandButton value="Atualizar" icon="fa fa-refresh" update="@all" style="margin-right:20px"/>
                     <p:commandButton value="Logout" icon="ui-icon-extlink" action="#{usuarioLoginView.logout()}" style="margin-right:10px"/>
                 </f:facet>
             </p:menubar>
@@ -93,7 +93,7 @@
         <br></br><br></br> 
         <h:form>
             <p:growl id="msgs" showDetail="true" />
-            <p:fieldset legend="Dados publicacao" toggleable="true" toggleSpeed="500" collapsed="true">
+            <p:fieldset legend="Criar publicação" toggleable="true" toggleSpeed="500" collapsed="true">
                 <p:ajax event="toggle" listener="#{fieldsetView.handleToggle}" update="msgs" />
                 <h:panelGrid columns="8" cellpadding="5">
 
@@ -125,7 +125,7 @@
         <br></br> 
         <h:form>
             <p:growl id="msgs" showDetail="true" />
-            <p:fieldset legend="Autores" toggleable="true" toggleSpeed="500"  collapsed="true">
+            <p:fieldset legend="Relacionar autores" toggleable="true" toggleSpeed="500"  collapsed="true">
                 <p:ajax event="toggle" listener="#{fieldsetView.handleToggle}" update="msgs" />
                 <h:panelGrid columns="8" cellpadding="5">
 
@@ -161,7 +161,7 @@
 
                     <h:outputText value=""/>
 
-                    <p:commandButton value="Alocar" style="width:150px" update="display1" actionListener="#{recursosControlador.colaboradorPublicacao()}" oncomplete="PF('dlg2').show()" icon="ui-icon-check" />
+                    <p:commandButton value="Relacionar" style="width:150px" update="display1" actionListener="#{recursosControlador.colaboradorPublicacao()}" oncomplete="PF('dlg2').show()" icon="ui-icon-check" />
 
                     <p:dialog header="Autores da publicacao" modal="true" showEffect="bounce" widgetVar="dlg2" resizable="false">   
                         <h:outputText id="display1" value="#{recursosControlador.mensagem_pub}"/>
@@ -174,7 +174,7 @@
         <h:form>
             <p:growl id="msgs" showDetail="true" />
 
-            <p:fieldset legend="Dados orientacao" toggleable="true" toggleSpeed="500" collapsed="true">
+            <p:fieldset legend="Criar orientação" toggleable="true" toggleSpeed="500" collapsed="true">
                 <p:ajax event="toggle" listener="#{fieldsetView.handleToggle}" update="msgs" />
                 <h:panelGrid columns="4" cellpadding="10" cellspacing="10">
                     <p:outputLabel for="dissertacao" value="Nome dissertacao: " />

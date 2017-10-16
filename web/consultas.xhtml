@@ -19,8 +19,7 @@
             </p:menubar>
             <br></br>
             <p:panel>
-                <h:outputText
-                    value="Consultas do sistema do Laboratorio" /> 
+                <b><h:outputText value="Consultas do Laboratório" /></b> 
             </p:panel>
             <br></br>
         </h:form>
@@ -31,13 +30,13 @@
                 <p:ajax event="toggle" listener="#{fieldsetView.handleToggle}" update="msgs" />
 
                 <p:tabView>
-                    <p:tab title="Alunos graduacao">
+                    <p:tab title="Alunos graduação">
                         <h:panelGrid columns="3" cellpadding="20">
                             <p:commandButton value="Consultar" style="width: 140px" actionListener="#{fieldsetView.verAlunosGrad()}" icon="ui-icon-search" />
                         </h:panelGrid>
                     </p:tab>
 
-                    <p:tab title="Alunos posgraduacao">
+                    <p:tab title="Alunos posgraduação">
                         <h:panelGrid columns="3" cellpadding="20">
                             <p:commandButton value="Consultar" style="width: 140px" actionListener="#{fieldsetView.verAlunosPos()}" icon="ui-icon-search" />
                         </h:panelGrid>

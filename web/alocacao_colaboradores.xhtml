@@ -11,7 +11,7 @@
         <title>Laboratorio #{laboratorioControlador.laboratorio.name}</title>
     </h:head>
     <h:body>        
-        <h:form>
+        <h:form>    
             <p:growl id="messages"/>
             <p:messages autoUpdate="true" />
             <p:menubar>
@@ -21,11 +21,9 @@
                     <p:commandButton value="Logout" icon="ui-icon-extlink" action="#{usuarioLoginView.logout()}" style="margin-right:10px"/>
                 </f:facet>
             </p:menubar>
-
-            <h3>Bem-vindo #{usuarioLoginView.username} ao laboratorio</h3>
+            <br></br>
             <p:panel>
-                <h:outputText
-                    value="Antes de fazer mudancas no projeto, por favor veja os colaboradores alocados em cada projeto" /> 
+                <b><h:outputText value="Antes de fazer mudancas no projeto, por favor veja o status e os colaboradores alocados em cada projeto" /></b>
             </p:panel>
             <br></br>
             <p:dataTable var="projeto" value="#{recursosControlador.projetos}">
@@ -41,11 +39,11 @@
                     <h:outputText value="#{projeto.profesores}" />
                 </p:column>
 
-                <p:column headerText="Graduacao">
+                <p:column headerText="Graduação">
                     <h:outputText value="#{projeto.alunos_graduacao}" />
                 </p:column>
 
-                <p:column headerText="Posgraduacao">
+                <p:column headerText="Posgraduação">
                     <h:outputText value="#{projeto.alunos_pos}" />
                 </p:column>
 
@@ -58,7 +56,7 @@
         <br></br><br></br>
         <h:form>
             <p:growl id="msgs" showDetail="true" />
-            <p:fieldset legend="Alocacao de colaboradores" toggleable="true" toggleSpeed="500" collapsed="true">
+            <p:fieldset legend="Alocação de colaboradores" toggleable="true" toggleSpeed="500" collapsed="true">
                 <p:ajax event="toggle" listener="#{fieldsetView.handleToggle}" update="msgs" />
                 <h:panelGrid columns="6" cellpadding="5">
                     <p:outputLabel for="projetos" value="Projetos: "/>
@@ -73,13 +71,13 @@
                         <f:selectItems value="#{recursosControlador.professores}" var="professores" itemLabel="#{professores.nome}" itemValue="#{professores.nome}"/>
                     </p:selectOneMenu>
 
-                    <p:outputLabel for="graduacao" value="Graduacao: "/>
+                    <p:outputLabel for="graduacao" value="Graduação: "/>
                     <p:selectOneMenu id="graduacao" value="#{recursosControlador.aluno_graduacao}" style="width: 150px">
                         <f:selectItem itemLabel="Graduacao" itemValue="null" noSelectionOption="true"/>
                         <f:selectItems value="#{recursosControlador.alunos_graduacao}" var="graduacao" itemLabel="#{graduacao.nome}" itemValue="#{graduacao.nome}"/>
                     </p:selectOneMenu>
 
-                    <p:outputLabel for="posgraduacao" value="Posgraduacao: "/>
+                    <p:outputLabel for="posgraduacao" value="Posgraduação: "/>
                     <p:selectOneMenu id="posgraduacao" value="#{recursosControlador.aluno_posgraduacao}" style="width: 150px">
                         <f:selectItem itemLabel="Posgraduacao" itemValue="null" noSelectionOption="true"/>
                         <f:selectItems value="#{recursosControlador.alunos_posgraduacao}" var="posgraduacao" itemLabel="#{posgraduacao.nome}" itemValue="#{posgraduacao.nome}"/>

@@ -124,6 +124,17 @@ public class Projeto {
         this.profesores = profesores;
     }
 
+    public ArrayList<Publicacao> getPublicacoesProf(){
+        ArrayList<Publicacao> publicacoesProf = new ArrayList<>();
+        
+        for(int x = 0; x < profesores.size(); x++){
+            for(int y = 0; y < profesores.get(x).getPublicacoes().size(); y++){
+                publicacoesProf.add(profesores.get(x).getPublicacoes().get(y));
+            }
+        }
+        return publicacoesProf;
+    }
+    
     public ArrayList<Graduacao> getAlunos_graduacao() {
         return alunos_graduacao;
     }

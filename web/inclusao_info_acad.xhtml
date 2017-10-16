@@ -20,8 +20,7 @@
             </p:menubar>
             <br></br>
             <p:panel>
-                <h:outputText
-                    value="Publicacoes do sistema do Laboratorio" /> 
+                <b><h:outputText value="Publicações do Laboratório" /></b>
             </p:panel>
             <br></br>
             <p:dataTable var="publicacao" value="#{recursosControlador.publicacoes}">
@@ -45,11 +44,11 @@
                     <h:outputText value="#{publicacao.profesores}" />
                 </p:column>
 
-                <p:column headerText="Graduacao" style="width: 70px">
+                <p:column headerText="Graduação" style="width: 70px">
                     <h:outputText value="#{publicacao.alunos_graduacao}" />
                 </p:column>
 
-                <p:column headerText="Posgraduacao" style="width: 70px">
+                <p:column headerText="Posgraduação" style="width: 70px">
                     <h:outputText value="#{publicacao.alunos_posgraduacao}" />
                 </p:column>
 
@@ -62,8 +61,7 @@
         <br></br>
         
             <p:panel>
-                <h:outputText
-                    value="Orientacoes do sistema do Laboratorio" /> 
+                <b><h:outputText value="Orientações do Laboratório" /></b>
             </p:panel>
             <br></br>
             <p:dataTable var="orientacao" value="#{recursosControlador.orientacoes}">
@@ -71,15 +69,15 @@
                     <h:outputText value="#{orientacao.id_orientacao}" />
                 </p:column>
 
-                <p:column headerText="Nome orientacao" style="width: 120px">
+                <p:column headerText="Nome orientação" style="width: 120px">
                     <h:outputText value="#{orientacao.dissertacao}" />
                 </p:column>
 
-                <p:column headerText="Aluno graduacao" style="width: 25px">
+                <p:column headerText="Aluno graduação" style="width: 25px">
                     <h:outputText value="#{orientacao.graduacao.nome}" />
                 </p:column>
 
-                <p:column headerText="Aluno posgraduacao" style="width: 25px">
+                <p:column headerText="Aluno posgraduação" style="width: 25px">
                     <h:outputText value="#{orientacao.posgraduacao.nome}" />
                 </p:column>
 
@@ -129,7 +127,7 @@
                 <p:ajax event="toggle" listener="#{fieldsetView.handleToggle}" update="msgs" />
                 <h:panelGrid columns="8" cellpadding="5">
 
-                    <p:outputLabel for="publicacao" value="Publicacao: "/>
+                    <p:outputLabel for="publicacao" value="Publicação: "/>
                     <p:selectOneMenu id="publicacao" value="#{recursosControlador.publicacao}" style="width: 150px">
                         <f:selectItem itemLabel="Publicacao" itemValue="null" noSelectionOption="true"/>
                         <f:selectItems value="#{recursosControlador.publicacoes}" var="publicacao" itemLabel="#{publicacao.id}" itemValue="#{publicacao.id}"/>
@@ -141,13 +139,13 @@
                         <f:selectItems value="#{recursosControlador.professores}" var="professores" itemLabel="#{professores.nome}" itemValue="#{professores.nome}"/>
                     </p:selectOneMenu>
 
-                    <p:outputLabel for="graduacao" value="Graduacao: "/>
+                    <p:outputLabel for="graduacao" value="Graduação: "/>
                     <p:selectOneMenu id="graduacao" value="#{recursosControlador.aluno_graduacao_pub}" style="width: 150px">
                         <f:selectItem itemLabel="Graduacao" itemValue="null" noSelectionOption="true"/>
                         <f:selectItems value="#{recursosControlador.alunos_graduacao}" var="graduacao" itemLabel="#{graduacao.nome}" itemValue="#{graduacao.nome}"/>
                     </p:selectOneMenu>
 
-                    <p:outputLabel for="posgraduacao" value="Posgraduacao: "/>
+                    <p:outputLabel for="posgraduacao" value="Posgraduação: "/>
                     <p:selectOneMenu id="posgraduacao" value="#{recursosControlador.aluno_pos_pub}" style="width: 150px">
                         <f:selectItem itemLabel="Posgraduacao" itemValue="null" noSelectionOption="true"/>
                         <f:selectItems value="#{recursosControlador.alunos_posgraduacao}" var="posgraduacao" itemLabel="#{posgraduacao.nome}" itemValue="#{posgraduacao.nome}"/>
@@ -163,7 +161,7 @@
 
                     <p:commandButton value="Relacionar" style="width:150px" update="display1" actionListener="#{recursosControlador.colaboradorPublicacao()}" oncomplete="PF('dlg2').show()" icon="ui-icon-check" />
 
-                    <p:dialog header="Autores da publicacao" modal="true" showEffect="bounce" widgetVar="dlg2" resizable="false">   
+                    <p:dialog header="Autores da publicação" modal="true" showEffect="bounce" widgetVar="dlg2" resizable="false">   
                         <h:outputText id="display1" value="#{recursosControlador.mensagem_pub}"/>
                     </p:dialog>
 
@@ -188,9 +186,9 @@
                 </h:panelGrid>
                 <br></br>
                 <p:tabView>
-                    <p:tab title="Alunos graduacao">
+                    <p:tab title="Alunos graduação">
                         <h:panelGrid columns="3" cellpadding="20">
-                            <p:outputLabel for="alunograd" value="Aluno graduacao: "/>
+                            <p:outputLabel for="alunograd" value="Aluno graduação: "/>
                             <p:selectOneMenu id="alunograd" value="#{recursosControlador.alunograd_diss}" style="width: 200px">
                                 <f:selectItem itemLabel="Alunos graduacao" itemValue="null" noSelectionOption="true"/>
                                 <f:selectItems value="#{recursosControlador.alunos_graduacao}" var="alunograd" itemLabel="#{alunograd.nome}" itemValue="#{alunograd.nome}"/>
@@ -198,15 +196,15 @@
 
                             <p:commandButton value="Criar" style="width: 140px" update="display2" actionListener="#{recursosControlador.criarOrientacaoGrad()}" oncomplete="PF('dlg3').show()" icon="ui-icon-check" />
 
-                            <p:dialog header="Dados orientacao" modal="true" showEffect="bounce" widgetVar="dlg3" resizable="false">   
+                            <p:dialog header="Dados orientação" modal="true" showEffect="bounce" widgetVar="dlg3" resizable="false">   
                                 <h:outputText id="display2" value="#{recursosControlador.mensagem_diss}"/>
                             </p:dialog>
                         </h:panelGrid>
                     </p:tab>
 
-                    <p:tab title="Alunos posgraduacao">
+                    <p:tab title="Alunos posgraduação">
                         <h:panelGrid columns="3" cellpadding="20">
-                            <p:outputLabel for="alunopos" value="Aluno posgraduacao: "/>
+                            <p:outputLabel for="alunopos" value="Aluno posgraduação: "/>
                             <p:selectOneMenu id="alunopos" value="#{recursosControlador.alunopos_diss}" style="width: 200px">
                                 <f:selectItem itemLabel="Alunos posgraduacao" itemValue="null" noSelectionOption="true"/>
                                 <f:selectItems value="#{recursosControlador.alunos_posgraduacao}" var="alunopos" itemLabel="#{alunopos.nome}" itemValue="#{alunopos.nome}"/>
@@ -214,7 +212,7 @@
 
                             <p:commandButton value="Criar" style="width: 140px" update="display3" actionListener="#{recursosControlador.criarOrientacaoPos()}" oncomplete="PF('dlg4').show()" icon="ui-icon-check" />
 
-                            <p:dialog header="Dados orientacao" modal="true" showEffect="bounce" widgetVar="dlg4" resizable="false">   
+                            <p:dialog header="Dados orientação" modal="true" showEffect="bounce" widgetVar="dlg4" resizable="false">   
                                 <h:outputText id="display3" value="#{recursosControlador.mensagem_diss}"/>
                             </p:dialog>
 

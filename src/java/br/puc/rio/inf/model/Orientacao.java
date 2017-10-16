@@ -72,5 +72,10 @@ public class Orientacao {
 
     public void setDissertacao(String dissertacao) {
         this.dissertacao = dissertacao;
-    }   
+    }  
+
+    @Override
+    public String toString() {
+        return Integer.toString(id_orientacao);
+    }
 }

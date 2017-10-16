@@ -19,8 +19,7 @@
             </p:menubar>
             <br></br>            
             <p:panel>
-                <h:outputText
-                    value="Modulo do sistema para gerar o relatorio do laboratorio" /> 
+                <b><h:outputText value="Módulo do sistema para gerar o relatório do laboratório" /></b> 
             </p:panel>
         </h:form>
         <br></br>
@@ -36,25 +35,25 @@
             <br></br>
             <p:panel>
                 <h:panelGrid columns="2" cellpadding="5">
-                    <p:outputLabel value="O numero de colaboradores do Laboratorio é "/>
+                    <p:outputLabel value="O número de colaboradores do Laboratório é "/>
                     <p:outputLabel value="#{recursosControlador.numColaboradores()}"/>
 
-                    <p:outputLabel value="O numero de projetos em Elaboracao é "/>
+                    <p:outputLabel value="O número de projetos em Elaboração é "/>
                     <p:outputLabel value="#{recursosControlador.numProjetosElab()}"/>
 
-                    <p:outputLabel value="O numero de projetos em Andamento é "/>
+                    <p:outputLabel value="O número de projetos em Andamento é "/>
                     <p:outputLabel value="#{recursosControlador.numProjetosAnd()}"/>
 
-                    <p:outputLabel value="O numero de projetos concluidos é "/>
+                    <p:outputLabel value="O número de projetos concluidos é "/>
                     <p:outputLabel value="#{recursosControlador.numProjetosConc()}"/>
 
-                    <p:outputLabel value="O numero total de projetos é "/>
+                    <p:outputLabel value="O número total de projetos é "/>
                     <p:outputLabel value="#{recursosControlador.projetos.size()}"/>
 
-                    <p:outputLabel value="O numero de publicacoes é "/>
+                    <p:outputLabel value="O número de publicações é "/>
                     <p:outputLabel value="#{recursosControlador.publicacoes.size()}"/>
 
-                    <p:outputLabel value="O numero de orientacoes é "/>
+                    <p:outputLabel value="O número de orientações é "/>
                     <p:outputLabel value="#{recursosControlador.orientacoes.size()}"/>
                 </h:panelGrid>
             </p:panel>

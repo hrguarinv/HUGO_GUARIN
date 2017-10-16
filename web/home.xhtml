@@ -18,15 +18,14 @@
             </p:menubar>
             <br></br>
             <p:panel style="width: 1200px">
-                <h:outputText
-                    value="Modulos do sistema do laboratorio" /> 
+                <b><h>Bem-vindo usuario #{usuarioLoginView.username} ao sistema do laboratorio</h></b>
             </p:panel>
             <br></br>
-            <p:panel header="Modulos" style="width: 1200px">
+            <p:panel header="Módulos do sistema do Laboratório" style="width: 1200px">
                 <h:panelGrid id="grid" columns="5" cellpadding="5">
                     <p:commandButton value="Alocar colaboradores" update="grid" icon="ui-icon-check" action="alocacao_colaboradores" validateClient="true" style="margin-right:10px"/>
                     <p:commandButton value="Alterar status dos projetos" update="grid" icon="ui-icon-check" action="alteracao_status" validateClient="true" style="margin-right:10px"/>
-                    <p:commandButton value="Inclusao informacao academica" update="grid" icon="ui-icon-check" action="inclusao_info_acad" validateClient="true" style="margin-right:10px"/>
+                    <p:commandButton value="Inclusão informação acadêmica" update="grid" icon="ui-icon-check" action="inclusao_info_acad" validateClient="true" style="margin-right:10px"/>
                     <p:commandButton value="Consultas do sistema" update="grid" icon="ui-icon-check" action="consultas" validateClient="true" style="margin-right:10px"/>
                     <p:commandButton value="Gerar relatorio" update="grid" icon="ui-icon-check" action="relatorio" validateClient="true" style="margin-right:10px"/>
                 </h:panelGrid>

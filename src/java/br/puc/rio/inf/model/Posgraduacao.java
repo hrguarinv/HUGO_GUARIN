@@ -11,21 +11,25 @@ package br.puc.rio.inf.model;
  */
 public class Posgraduacao extends Aluno {
 
-    private String Regcurso;
+    private String regCurso;
     private boolean tipo;
 
     public Posgraduacao(String Regcurso, boolean tipo, Orientacao orientacao, String data, String Id, String nome, String email) {
         super(orientacao, data, Id, nome, email);
-        this.Regcurso = Regcurso;
+        this.regCurso = Regcurso;
         this.tipo = tipo;
     }
-
-    public String getRegcurso() {
-        return Regcurso;
+    
+    public Posgraduacao(){
+        
     }
 
-    public void setRegcurso(String Regcurso) {
-        this.Regcurso = Regcurso;
+    public String getRegCurso() {
+        return regCurso;
+    }
+
+    public void setRegCurso(String regCurso) {
+        this.regCurso = regCurso;
     }
 
     public boolean isTipo() {

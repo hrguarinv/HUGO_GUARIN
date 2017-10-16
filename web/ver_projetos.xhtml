@@ -15,39 +15,27 @@
         <i id="customheader" class="projetos" style="display:none" ></i>
         <p:dataTable var="projetos" value="#{recursosControlador.projetos}">
  
-            <p:column headerText="Titulo" style="width: 40px">
-                <h:outputText value="#{projetos.titulo}" />
+            <p:column headerText="Id" style="width: 10px">
+                <h:outputText value="#{projetos.id}" />
             </p:column>
  
-            <p:column headerText="Status" style="width: 20px">
+            <p:column headerText="Status" style="width: 15px">
                 <h:outputText value="#{projetos.status}" />
             </p:column>
             
-            <p:column headerText="Data inicio" style="width: 10px">
-                <h:outputText value="#{projetos.dataInicio}" />
-            </p:column>
-            
-            <p:column headerText="Data termino" style="width: 10px">
-                <h:outputText value="#{projetos.dataTermino}" />
-            </p:column>
-            
-            <p:column headerText="Alunos graduacao" style="width: 30px">
+            <p:column headerText="Alunos graduação" style="width: 30px">
                 <h:outputText value="#{projetos.alunos_graduacao}" />
             </p:column>
             
-            <p:column headerText="Alunos_posgraduacao" style="width: 10px">
+            <p:column headerText="Alunos_posgraduação" style="width: 30px">
                 <h:outputText value="#{projetos.alunos_pos}" />
             </p:column>
             
-            <p:column headerText="Professores" style="width: 10px">
+            <p:column headerText="Professores" style="width: 30px">
                 <h:outputText value="#{projetos.profesores}" />
             </p:column>
             
-            <p:column headerText="Pesquisadores" style="width: 10px">
-                <h:outputText value="#{projetos.pesquisadores}" />
-            </p:column>
-            
-            <p:column headerText="Publicacoes" style="width: 10px">
+            <p:column headerText="Publicações" style="width: 30px">
                 <h:outputText value="#{projetos.publicacoes}" />
             </p:column>
             
